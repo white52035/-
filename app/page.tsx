@@ -289,11 +289,60 @@ const aiModules = [
   },
 ];
 
+const aiChapters = [
+  {
+    n: 1,
+    title: "AI演進與造成改變的重要元素",
+    label: "技術底座",
+    units: ["AI歷史與發展", "神經科學與ANN", "機器學習", "No-Code AI", "CPU與GPU", "資料與資料庫"],
+    core: "從規則式系統走向資料驅動學習；運算、特徵與資料治理共同決定模型能做什麼。",
+    amis: "建立臨床認知軸與社會語言軸，檢驗加入病前語言生態後，模型是否更能區分語言差異、磨損與認知變化。",
+    caution: "大型模型與更多運算不會自動改善研究品質；小樣本、標籤偏差和資料代表性仍是核心限制。",
+  },
+  {
+    n: 2,
+    title: "當AI成為醫師：邏輯思考與決策",
+    label: "臨床決策",
+    units: ["定義臨床問題", "資料取得與前處理", "決策樹與迴歸", "結果分析與驗證"],
+    core: "把臨床需求轉成可驗證的目標、資料、時間點、使用者與可採取行動，而非只追求高準確率。",
+    amis: "比較臨床資料、阿美語特徵與病前語言生態三層模型，並以敏感度、特異度、校準及錯誤代價評估。",
+    caution: "低分、缺失值與離群值可能來自方言、聽力、教育或任務陌生，不應直接轉成病理標籤。",
+  },
+  {
+    n: 3,
+    title: "當AI成為駕駛員：影像辨識",
+    label: "特徵辨識",
+    units: ["道路環境辨識", "像素與特徵圖", "卷積神經網路", "限制、風險與責任"],
+    core: "CNN能從局部模式建立分類，但真實世界的背景、設備與情境變動會暴露模型的脆弱性。",
+    amis: "將影像特徵學習類比到語音頻譜，跨錄音設備、場域與部落驗證模型是否學到真正的語言或認知訊號。",
+    caution: "答對不代表理由正確；模型可能依賴噪音、設備或場域標記等捷徑。",
+  },
+  {
+    n: 4,
+    title: "當AI成為個人助理：語意理解與文字生成",
+    label: "語言模型",
+    units: ["NLP與大型語言模型", "Token與詞向量", "Transformer、BERT與GPT"],
+    core: "Tokenization、詞向量與Attention共同建立上下文表示；流暢生成仍不等於理解或事實正確。",
+    amis: "比較字元、子詞與詞素切分，保留阿美語構詞、語碼轉換與完整敘事脈絡，分析詞彙、句法、語意及語用層次。",
+    caution: "通用切詞器可能對低資源語言不公平；Attention呈現關聯，但不是完整因果解釋。",
+  },
+  {
+    n: 5,
+    title: "AI取代人類？探討AI的可信任性",
+    label: "可信任治理",
+    units: ["穩健性與聯邦學習", "可解釋性", "公平性與捷徑", "責任治理與Deepfake"],
+    core: "可信任AI必須兼顧穩健、可解釋、公平、隱私、人類監督與責任追溯。",
+    amis: "以跨部落／方言外部驗證、群體錯誤率、個案解釋、分層同意及社群治理建立完整生命週期。",
+    caution: "第三方模型不能轉移研究責任；聯邦學習與解釋工具也不會自動消除隱私、偏見或因果誤讀。",
+  },
+];
+
 export default function Home() {
   const [query, setQuery] = useState(""),
     [group, setGroup] = useState("全部"),
     [selected, setSelected] = useState(1),
     [tab, setTab] = useState("chapters"),
+    [aiChapter, setAiChapter] = useState(1),
     [read, setRead] = useState<number[]>([]);
   useEffect(() => {
     const s = localStorage.getItem("clinical-socio-read");
@@ -311,6 +360,7 @@ export default function Home() {
     [query, group],
   );
   const current = chapters[selected - 1];
+  const currentAi = aiChapters[aiChapter - 1];
   const toggle = (n: number) => {
     const next = read.includes(n) ? read.filter((x) => x !== n) : [...read, n];
     setRead(next);
@@ -516,12 +566,41 @@ export default function Home() {
               <h2>關鍵科技探索<br /><em>人工智慧 × 臨床社會語言學</em></h2>
             </div>
             <div className="ai-summary">
-              <span>TAICA MOOCs · 第五章</span>
-              <p>AI 的高準確率不是終點。真正可用的系統，還要能跨場域保持穩健、讓不同使用者理解、公平對待各群體，並接受持續治理。</p>
-              <a href="https://docs.google.com/document/d/1KKCX0UduewpLieoyoJ8fipFtP_fnh-uSaFzkj6QFT7o/edit?tab=t.bbb178367aj" target="_blank" rel="noreferrer">閱讀完整課程整理 ↗</a>
+              <span>TAICA MOOCs · 五章完整閱讀</span>
+              <p>從AI演進、智慧醫療、影像辨識、語言模型到可信任治理，逐章轉譯為高齡阿美語與神經認知研究可使用的問題、方法與警示。</p>
+              <a href="https://docs.google.com/document/d/1KKCX0UduewpLieoyoJ8fipFtP_fnh-uSaFzkj6QFT7o/edit" target="_blank" rel="noreferrer">閱讀五章完整課程整理 ↗</a>
             </div>
           </div>
 
+          <div className="ai-course-stats">
+            <div><strong>5</strong><span>完整章節</span></div>
+            <div><strong>21</strong><span>主題單元</span></div>
+            <div><strong>50</strong><span>練習題</span></div>
+            <div><strong>1</strong><span>阿美族研究主軸</span></div>
+          </div>
+
+          <div className="ai-chapter-browser">
+            <aside>
+              <div className="section-kicker">FIVE-CHAPTER MAP</div>
+              {aiChapters.map((c) => (
+                <button key={c.n} className={aiChapter === c.n ? "active" : ""} onClick={() => setAiChapter(c.n)}>
+                  <span>{String(c.n).padStart(2, "0")}</span><b>{c.label}</b><small>{c.title}</small>
+                </button>
+              ))}
+            </aside>
+            <article className="ai-chapter-detail">
+              <header><span>CHAPTER {String(currentAi.n).padStart(2, "0")}</span><b>{currentAi.label}</b></header>
+              <h3>{currentAi.title}</h3>
+              <div className="ai-unit-list">{currentAi.units.map((u, i) => <span key={u}><b>{currentAi.n}-{i + 1}</b>{u}</span>)}</div>
+              <div className="ai-reading-notes">
+                <div><small>章節核心</small><p>{currentAi.core}</p></div>
+                <div><small>連回阿美族研究</small><p>{currentAi.amis}</p></div>
+                <div><small>研究警示</small><p>{currentAi.caution}</p></div>
+              </div>
+            </article>
+          </div>
+
+          <div className="ai-section-heading"><div className="section-kicker">CHAPTER 05 · TRUSTWORTHY AI</div><h3>可信任AI四個面向</h3></div>
           <div className="trust-loop" aria-label="可信任人工智慧四個核心面向">
             <div className="trust-center"><b>可信任 AI</b><small>不只看準確率</small></div>
             {aiModules.map((m, i) => (
@@ -564,7 +643,7 @@ export default function Home() {
             <small>博士研究缺口</small>
             <p>目前缺少能同時整合阿美語病前語言生態、跨部落／方言外部驗證、個案層次解釋、公平性評估與原住民族資料主權的高齡神經認知語音研究框架。</p>
           </div>
-          <div className="source-note">本頁依據「TAICA MOOCs｜關鍵科技探索－人工智慧」第五章課程整理，轉譯為阿美族臨床社會語言學研究的閱讀入口；屬研究設計草圖，非臨床診斷工具。</div>
+          <div className="source-note">本頁依據「TAICA MOOCs｜關鍵科技探索－人工智慧」第一至第五章完整課程整理，轉譯為阿美族臨床社會語言學研究的閱讀入口；屬研究設計草圖，非臨床診斷工具。</div>
         </section>
       )}
       {tab === "plan" && (
