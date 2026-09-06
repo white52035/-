@@ -326,6 +326,12 @@ body {
 .reference-count strong { color:var(--orange); font:44px Georgia; }
 .reference-count span { color:#718078; font-size:12px; }
 .reference-tools { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:18px 22px; background:var(--ink); }
+.reference-collections { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border:1px solid var(--line); border-bottom:0; }
+.reference-collections button { border:0; border-right:1px solid var(--line); background:#e7e5da; color:var(--ink); padding:16px 20px; cursor:pointer; text-align:left; font-weight:700; }
+.reference-collections button:last-child { border-right:0; }
+.reference-collections button.active { background:var(--orange); color:white; }
+.reference-collections b { float:right; font:20px Georgia; }
+.newest-note { color:#f2b39a; font-size:11px; letter-spacing:.14em; white-space:nowrap; }
 .reference-search { display:flex; align-items:center; gap:10px; width:min(100%,520px); color:white; }
 .reference-search input { width:100%; border:0; border-bottom:1px solid #ffffff67; background:transparent; color:white; padding:9px 2px; outline:0; font-size:14px; }
 .reference-search input::placeholder { color:#aebdb6; }
@@ -346,6 +352,8 @@ body {
 .reference-entry a { display:inline-flex; align-items:center; gap:8px; color:var(--ink); font-size:11px; text-decoration:none; border-bottom:1px solid var(--orange); padding-bottom:3px; }
 .reference-entry a span { background:var(--orange); color:white; padding:3px 5px; font-size:8px; }
 .reference-entry a b { color:var(--orange); }
+.thesis-list .reference-entry p { font-family:Georgia,"Noto Serif TC",serif; font-weight:600; }
+.thesis-list .reference-number b { font-size:24px; }
 .reference-provenance { margin-top:25px; padding:25px 30px; background:#eee9dc; border-left:3px solid var(--orange); }
 .reference-provenance b { font-size:12px; letter-spacing:.12em; color:var(--orange); }
 .reference-provenance p { line-height:1.7; color:#53675f; }

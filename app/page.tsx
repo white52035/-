@@ -19,6 +19,7 @@ type ReferenceItem = {
   focus: string;
   doi: string;
 };
+type ThesisReference = { title: string; url: string; topic: string };
 const raw = [
   [
     1,
@@ -369,6 +370,44 @@ const references: ReferenceItem[] = [
   [21,"Part II","Isaac, K. M.","Managing linguistic diversity in the clinic: Interpreters in speech-language pathology","口譯協作、跨文化溝通、臨床治理","10.1002/9780470754856.ch21"],
 ].map(([chapter,part,authors,title,focus,doi])=>({chapter,part,authors,title,focus,doi})) as ReferenceItem[];
 
+// Researcher-supplied order: newest to oldest. Keep NDLTD Handle links canonical.
+const thesisReferences: ThesisReference[] = [
+  ["以生成式人工智慧建立稀少性語言之影片生成系統","https://hdl.handle.net/11296/d42g2a","生成式AI與低資源語言"],
+  ["台語失語症病人詞彙理解之腦事件相關電位研究","https://hdl.handle.net/11296/j2s6t8","失語症與神經語言學"],
+  ["阿美族語失語症患者評估測驗之初步發展","https://hdl.handle.net/11296/vs275u","阿美語與臨床評估"],
+  ["左右腦腦傷患者語用測驗表現之研究","https://hdl.handle.net/11296/2h9m7y","腦傷與語用評估"],
+  ["O Pangcah kami, misanoPangcah kami i loma': Misawaday a misanoholam a parod no Pangcah i Taywan 我們是Pangcah，我們在家講Pangcah：臺灣原住民族家庭語言去殖民化","https://hdl.handle.net/11296/7y8gqp","Pangcah與語言去殖民"],
+  ["阿美語語言轉移與語言減退—以花蓮縣豐濱鄉靜浦部落為例—","https://hdl.handle.net/11296/z2553h","阿美語維持與轉移"],
+  ["花蓮地區阿美族語語言之調查：維持與轉移","https://hdl.handle.net/11296/f7p9hg","阿美語維持與轉移"],
+  ["阿美族語的語言活力","https://hdl.handle.net/11296/z7y53e","阿美語活力"],
+  ["原住民族語復振之研究：以臺東射馬干部落為例","https://hdl.handle.net/11296/e345g2","族語復振"],
+  ["原住民族語復振之研究―以賽德克族眉溪部落為例","https://hdl.handle.net/11296/8hm8u8","族語復振"],
+  ["原住民族語復振之研究","https://hdl.handle.net/11296/988976","族語復振"],
+  ["花蓮太魯閣語語言轉移與減退－以支亞干部落為例－","https://hdl.handle.net/11296/b7z923","語言轉移與減退"],
+  ["臺灣原住民族語政策之批判論述分析","https://hdl.handle.net/11296/rr6tz7","族語政策"],
+  ["原住民族群主流化之研究：族語復振的政策與現況評估","https://hdl.handle.net/11296/3532x2","族語政策與復振"],
+  ["台灣原住民族語言能力認證制度之評估","https://hdl.handle.net/11296/ksj3v2","族語認證與政策"],
+  ["臺灣原住民族幼兒園實施沉浸式族語教學之研究","https://hdl.handle.net/11296/39d4b2","沉浸式族語教育"],
+  ["'Mafana' Kaku!'：台灣原住民族語共學園中的兒童能動性及語言選擇","https://hdl.handle.net/11296/ebnt3u","兒童語言社會化"],
+  ["Mipaselak to sowal no Pangcah: A digital ethnography of two open 'Amis/Pangcah language platforms, 'Amis MoeDict and 'Amis Wikipitiya","https://hdl.handle.net/11296/32zv6m","阿美語數位平台"],
+  ["台北ina的族語日常","https://hdl.handle.net/11296/fd8y6s","都市族語實踐"],
+  ["族群文化與親密關係：七位都市排灣族女性的觀點","https://hdl.handle.net/11296/x8ykx6","族群文化與性別"],
+  ["'O pirayray no kiwkay to sowal no Pangcah': Entanglements of Pangcah Language Revitalization With(in) the Presbyterian Church of Taiwan","https://hdl.handle.net/11296/7stda5","Pangcah、教會與復振"],
+  ["里慕伊．阿紀小說的鄉土與性別書寫","https://hdl.handle.net/11296/8cbxk7","原住民族文學與性別"],
+  ["近代國家體制下學校教育對台東和平部落阿美族人語言使用變遷之研究","https://hdl.handle.net/11296/r8yfx3","阿美語、教育與變遷"],
+  ["台灣原住民族政策的發展：透過身份、語言、生計的分析","https://hdl.handle.net/11296/hj5zt6","原住民族政策"],
+  ["阿美族語戲劇對語言傳承與保護策略之初探","https://hdl.handle.net/11296/866qf4","阿美語傳承"],
+  ["民俗文學分析在語言教學中的研究︰以花蓮縣太巴塱部落《創世神話》為例","https://hdl.handle.net/11296/tfy9xt","阿美語文學與教學"],
+  ["成功阿美的教會活動及其教育意義","https://hdl.handle.net/11296/ss7m84","阿美族教會與教育"],
+  ["台灣少數民族語言政策評估之研究－以花蓮縣轄內原住民族為例","https://hdl.handle.net/11296/4s74pj","族語政策評估"],
+  ["台灣與紐西蘭原住民族語言政策之比較分析","https://hdl.handle.net/11296/tskv3z","族語政策比較"],
+  ["從南投縣Toda（都達）母語實踐與傳承探討賽德克族的族群認同","https://hdl.handle.net/11296/sx92qb","母語傳承與認同"],
+  ["卑南語學習的批評分析：法語與卑南語之語言教材比較","https://hdl.handle.net/11296/87vbv2","族語教材"],
+  ["從沉浸式族語教學幼兒園到太魯閣族語復振－以花蓮太魯閣族原鄉地區為例","https://hdl.handle.net/11296/2ahnqq","沉浸教學與復振"],
+  ["北部阿美語杓會厭肌塞音、喉塞音及滑音之音韻地位研究","https://hdl.handle.net/11296/est84r","阿美語音韻"],
+  ["原住民族語言書寫系統符號教學研究─以Akiyo教師阿美族語教學為例","https://hdl.handle.net/11296/ttb246","阿美語書寫與教學"],
+].map(([title,url,topic]) => ({title,url,topic})) as ThesisReference[];
+
 export default function Home() {
   const [query, setQuery] = useState(""),
     [group, setGroup] = useState("全部"),
@@ -377,6 +416,7 @@ export default function Home() {
     [aiChapter, setAiChapter] = useState(1),
     [refQuery, setRefQuery] = useState(""),
     [refPart, setRefPart] = useState("全部"),
+    [refCollection, setRefCollection] = useState<"chapters" | "theses">("theses"),
     [read, setRead] = useState<number[]>([]);
   useEffect(() => {
     const s = localStorage.getItem("clinical-socio-read");
@@ -399,6 +439,9 @@ export default function Home() {
     (refPart === "全部" || r.part === refPart) &&
     `${r.chapter}${r.authors}${r.title}${r.focus}`.toLowerCase().includes(refQuery.toLowerCase())
   ), [refQuery, refPart]);
+  const filteredTheses = useMemo(() => thesisReferences.filter((r) =>
+    `${r.title}${r.topic}${r.url}`.toLowerCase().includes(refQuery.toLowerCase())
+  ), [refQuery]);
   const toggle = (n: number) => {
     const next = read.includes(n) ? read.filter((x) => x !== n) : [...read, n];
     setRead(next);
@@ -692,17 +735,21 @@ export default function Home() {
         <section className="references-view">
           <div className="references-head">
             <div>
-              <div className="section-kicker">CHAPTER REFERENCES · APA 7</div>
+              <div className="section-kicker">REFERENCE LIBRARY · PERMANENT LINKS</div>
               <h2>文獻參考</h2>
-              <p>依《臨床社會語言學》21章整理章節原典，保留章節歸屬、研究焦點與可查證的DOI永久連結。</p>
+              <p>整合《臨床社會語言學》章節原典與臺灣博碩士論文，保留研究焦點及可查證的永久連結。</p>
             </div>
-            <div className="reference-count"><strong>{filteredReferences.length}</strong><span>／21章文獻</span></div>
+            <div className="reference-count"><strong>{refCollection === "theses" ? filteredTheses.length : filteredReferences.length}</strong><span>／{refCollection === "theses" ? "34篇論文" : "21章文獻"}</span></div>
+          </div>
+          <div className="reference-collections" role="tablist" aria-label="文獻來源">
+            <button className={refCollection === "theses" ? "active" : ""} onClick={() => setRefCollection("theses")}>臺灣博碩士論文知識加值系統 <b>34</b></button>
+            <button className={refCollection === "chapters" ? "active" : ""} onClick={() => setRefCollection("chapters")}>書籍章節原典 <b>21</b></button>
           </div>
           <div className="reference-tools">
-            <label className="reference-search"><span>⌕</span><input value={refQuery} onChange={(e)=>setRefQuery(e.target.value)} placeholder="搜尋作者、章名或研究主題" /></label>
-            <div className="reference-parts">{["全部","Part I","Part II"].map((p)=><button key={p} className={refPart===p?"active":""} onClick={()=>setRefPart(p)}>{p}</button>)}</div>
+            <label className="reference-search"><span>⌕</span><input value={refQuery} onChange={(e)=>setRefQuery(e.target.value)} placeholder="搜尋題名、研究主題或永久識別碼" /></label>
+            {refCollection === "chapters" ? <div className="reference-parts">{["全部","Part I","Part II"].map((p)=><button key={p} className={refPart===p?"active":""} onClick={()=>setRefPart(p)}>{p}</button>)}</div> : <div className="newest-note">↓ 新 → 舊</div>}
           </div>
-          <div className="reference-list">
+          {refCollection === "chapters" ? <div className="reference-list">
             {filteredReferences.map((r)=><article key={r.chapter}>
               <div className="reference-number"><span>CH.</span><b>{String(r.chapter).padStart(2,"0")}</b></div>
               <div className="reference-entry">
@@ -711,8 +758,17 @@ export default function Home() {
                 <a href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer"><span>DOI</span>{r.doi}<b>↗</b></a>
               </div>
             </article>)}
-          </div>
-          <div className="reference-provenance"><b>來源與界線</b><p>章名與作者依指定Google文件整理；DOI已逐章以Crossref書目資料核對。此區列出各章原典，不將閱讀心得中的未完整書目人名或案例自行擴充為正式引用。</p><a href="https://docs.google.com/document/d/1J7xyJ0r_9L6q6xOnYD_RA8o9kN33zXWJYVBv7zsjHWQ/edit" target="_blank" rel="noreferrer">開啟原始整理文件 ↗</a></div>
+          </div> : <div className="reference-list thesis-list">
+            {filteredTheses.map((r, index)=><article key={r.url}>
+              <div className="reference-number"><span>NO.</span><b>{String(index + 1).padStart(2,"0")}</b></div>
+              <div className="reference-entry">
+                <div className="reference-meta"><span>學位論文</span><small>{r.topic}</small></div>
+                <p>{r.title}</p>
+                <a href={r.url} target="_blank" rel="noreferrer"><span>NDLTD</span>{r.url.replace("https://", "")}<b>↗</b></a>
+              </div>
+            </article>)}
+          </div>}
+          <div className="reference-provenance"><b>來源與排序</b><p>{refCollection === "theses" ? "本清單收錄指定的34筆「臺灣博碩士論文知識加值系統」文獻，依研究者提供之新至舊順序呈現；每筆均連至國家圖書館Handle永久識別網址。國圖目錄可能要求驗證碼，本站不臆補未能可靠核對的年份或作者。" : "章名與作者依指定Google文件整理；DOI已逐章以Crossref書目資料核對。此區列出各章原典，不將閱讀心得中的未完整書目人名或案例自行擴充為正式引用。"}</p>{refCollection === "chapters" && <a href="https://docs.google.com/document/d/1J7xyJ0r_9L6q6xOnYD_RA8o9kN33zXWJYVBv7zsjHWQ/edit" target="_blank" rel="noreferrer">開啟原始整理文件 ↗</a>}</div>
         </section>
       )}
       {tab === "plan" && (
