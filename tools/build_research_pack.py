@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Iterable
+import re
 
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
@@ -173,6 +174,29 @@ def add_text(doc, text: str, *, bold=False, italic=False, size=12, alignment=WD_
     r = p.add_run(text)
     set_run_font(r, size=size, bold=bold, italic=italic)
     return p
+
+
+def add_apa_reference(doc, segments, url=None):
+    """Add one APA 7 reference using journal-manuscript spacing and hanging indent."""
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p.paragraph_format.left_indent = Inches(.5)
+    p.paragraph_format.first_line_indent = Inches(-.5)
+    p.paragraph_format.line_spacing = 2
+    p.paragraph_format.space_after = Pt(0)
+    p.paragraph_format.widow_control = True
+    for text, italic in segments:
+        set_run_font(p.add_run(text), size=11, italic=italic)
+    if url:
+        add_hyperlink(p, url, url)
+    return p
+
+
+def load_ndltd_references():
+    """Read the site's canonical NDLTD list without duplicating a second data source."""
+    source = (ROOT / "app" / "page.tsx").read_text(encoding="utf-8")
+    pattern = re.compile(r'\["([^"]+)","(https://hdl\.handle\.net/11296/[a-z0-9]+)","([^"]+)"\]')
+    return [(title, url, topic) for title, url, topic in pattern.findall(source)]
 
 
 def add_heading(doc, text: str, level=1) -> None:
@@ -494,19 +518,48 @@ def build_doc(figures: list[Path]) -> None:
     add_text(doc,"最優先的證據缺口是：阿美語方言與任務公平性、病前雙語基線、自然互動與臨床任務的效標連結，以及可操作的資料主權／撤回機制。這些缺口決定研究能否把『不同』與『病理』清楚分開。")
 
     add_heading(doc,"參考文獻")
-    refs = [
-        ("Ball, M. J. (Ed.). (2005). Clinical sociolinguistics. Blackwell Publishing.", None),
-        ("Hast, A. C. (2023). Mipaselak to sowal no Pangcah: A digital ethnography of two open 'Amis/Pangcah language platforms, 'Amis MoeDict and 'Amis Wikipitiya [Master's thesis, National Dong Hwa University]. ", URLS["hast"]),
-        ("Sifo Lakaw. (2024). O Pangcah kami, misanoPangcah kami i loma': Misawaday a misanoholam a parod no Pangcah i Taywan [Doctoral dissertation, National Dong Hwa University]. ", URLS["lakaw"]),
-        ("全俊儒（2025）。《跨文化溝通對原住民醫病關係的影響—以南投某教學醫院為例》［碩士論文，南開科技大學］。", URLS["chuan"]),
-        ("張文翊（2024）。《文化敏感音樂治療應用於部落長者預防及延緩失能之成效探討》［碩士論文，輔仁大學］。", URLS["chang"]),
-        ("陳誼誠（2017）。《阿美族語的語言活力》［博士論文，國立政治大學］。", URLS["chen"]),
-        ("蕭惠美（2025）。《以層級分析法探討提升原住民健康識能轉譯之關鍵成功因素》［碩士論文，國立屏東科技大學］。", URLS["hsiao"]),
+    add_text(doc,"本節依 APA 第 7 版及一般學術期刊投稿格式編排：不加序號、雙行距、0.5 吋懸掛縮排，DOI 與永久網址使用可點擊連結。",size=10,line=1.5,after=12)
+
+    add_heading(doc,"中文及臺灣學位論文",2)
+    verified_theses = {
+        "阿美族語的語言活力": ("陳誼誠（2017）。", "《阿美族語的語言活力》［博士論文，國立政治大學］。", "https://hdl.handle.net/11296/z7y53e"),
+        "Mipaselak to sowal no Pangcah: a digital ethnography of two open 'Amis/Pangcah language platforms, 'Amis MoeDict and 'Amis Wikipitiya": ("Hast, A. C. (2023). ", "Mipaselak to sowal no Pangcah: A digital ethnography of two open 'Amis/Pangcah language platforms, 'Amis MoeDict and 'Amis Wikipitiya [Master's thesis, National Dong Hwa University]. ", "https://hdl.handle.net/11296/32zv6m"),
+        "O Pangcah kami, misanoPangcah kami i loma': Misawaday a misanoholam a parod no Pangcah i Taywan 我們是Pangcah，我們在家講Pangcah：臺灣原住民族家庭語言去殖民化": ("Sifo Lakaw. (2024). ", "O Pangcah kami, misanoPangcah kami i loma': Misawaday a misanoholam a parod no Pangcah i Taywan [Doctoral dissertation, National Dong Hwa University]. ", "https://hdl.handle.net/11296/7y8gqp"),
+    }
+    thesis_items = []
+    for title, url, _topic in load_ndltd_references():
+        if title in verified_theses:
+            lead, work, canonical = verified_theses[title]
+            thesis_items.append((title.casefold(), [(lead, False), (work, True)], canonical))
+        else:
+            thesis_items.append((title.casefold(), [("", False), (title, True), ("（無日期）。［學位論文］。臺灣博碩士論文知識加值系統。", False)], url))
+    additional_theses = [
+        ("全俊儒（2025）。", "跨文化溝通對原住民醫病關係的影響：以南投某教學醫院為例［碩士論文，南開科技大學］。", URLS["chuan"]),
+        ("張文翊（2024）。", "文化敏感音樂治療應用於部落長者預防及延緩失能之成效探討［碩士論文，輔仁大學］。", URLS["chang"]),
+        ("蕭惠美（2025）。", "以層級分析法探討提升原住民健康識能轉譯之關鍵成功因素［碩士論文，國立屏東科技大學］。", URLS["hsiao"]),
     ]
-    for text,url in refs:
-        p=doc.add_paragraph(); p.paragraph_format.left_indent=Inches(.5); p.paragraph_format.first_line_indent=Inches(-.5); p.paragraph_format.line_spacing=2; p.paragraph_format.space_after=Pt(0)
-        set_run_font(p.add_run(text),size=11)
-        if url: add_hyperlink(p,url,url)
+    for lead, work, url in additional_theses:
+        thesis_items.append((lead.casefold(), [(lead, False), (work, True)], url))
+    for _key, segments, url in sorted(thesis_items, key=lambda item: item[0]):
+        add_apa_reference(doc, segments, url)
+
+    doc.add_paragraph()
+    add_heading(doc,"英文書籍及章節",2)
+    chapter_pages = ["1–14","15–25","26–35","36–48","49–62","63–73","74–86","87–100","101–119","120–132","133–149","151–164","165–179","180–192","193–206","207–218","219–229","230–241","242–249","250–264","265–280"]
+    chapter_source = (ROOT / "app" / "page.tsx").read_text(encoding="utf-8")
+    chapter_pattern = re.compile(r'\[(\d+),"Part [^"]+","([^"]+)","([^"]+)","[^"]+","(10\.1002/[^"]+)"\]')
+    chapter_items = []
+    for number, authors, title, doi in chapter_pattern.findall(chapter_source):
+        pages = chapter_pages[int(number) - 1]
+        segments = [
+            (f"{authors} (2005). {title}. In M. J. Ball (Ed.), ", False),
+            ("Clinical sociolinguistics", True),
+            (f" (pp. {pages}). Blackwell Publishing. ", False),
+        ]
+        chapter_items.append((authors.casefold(), segments, f"https://doi.org/{doi}"))
+    for _key, segments, url in sorted(chapter_items, key=lambda item: item[0]):
+        add_apa_reference(doc, segments, url)
+    add_apa_reference(doc, [("Ball, M. J. (Ed.). (2005). ", False), ("Clinical sociolinguistics", True), (". Blackwell Publishing.", False)])
 
     add_heading(doc,"圖表可近用描述",1)
     add_text(doc,"圖 1：四個水平方塊由左至右排列，依序為生命史與制度脈絡、社會網絡與共同實踐、語言使用量／優勢／方言、任務中的語言表現；下方列出教育識字、聽力、健康史、任務熟悉度與口譯者效應等調節或混淆因素。",size=10,line=1.5)
