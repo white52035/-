@@ -250,6 +250,45 @@ const variables = [
   ["口譯與治理", "協作者角色、提示紀錄、同意範圍、公開層級與撤回方式"],
 ];
 
+const aiModules = [
+  {
+    id: "5-1",
+    title: "穩健性",
+    en: "ROBUSTNESS",
+    question: "換一個部落、方言、設備或任務，模型還可靠嗎？",
+    concepts: ["資料分布偏移", "對抗攻擊", "外部驗證", "聯邦學習"],
+    amis:
+      "阿美語語音模型不能只在單一部落或單一錄音條件下驗證；應以留一部落、留一方言、跨設備與縱貫資料測試。",
+  },
+  {
+    id: "5-2",
+    title: "可解釋性",
+    en: "EXPLAINABILITY",
+    question: "模型依據的是疾病訊號，還是社會語言特徵？",
+    concepts: ["Grad-CAM", "LIME", "SHAP", "反事實解釋"],
+    amis:
+      "解釋必須納入病前語言基準，避免把口音、語碼轉換、教育與識字經驗誤當成神經認知病理。",
+  },
+  {
+    id: "5-3",
+    title: "公平性",
+    en: "FAIRNESS",
+    question: "整體準確率是否掩蓋特定群體承受的錯誤？",
+    concepts: ["群體錯誤率", "代表性偏差", "捷徑學習", "去偏訓練"],
+    amis:
+      "應依部落、方言、年齡、性別、教育與語言優勢分層報告效能，並由社群共同界定何謂公平。",
+  },
+  {
+    id: "5-4",
+    title: "責任治理",
+    en: "GOVERNANCE",
+    question: "AI 出錯、被濫用或偽造時，誰負責、如何追溯？",
+    concepts: ["人類監督", "Deepfake", "生命週期治理", "資料主權"],
+    amis:
+      "阿美語語音兼具身分與文化敏感性；同意、用途、保存、撤回與模型再利用都需要分層授權及社群治理。",
+  },
+];
+
 export default function Home() {
   const [query, setQuery] = useState(""),
     [group, setGroup] = useState("全部"),
@@ -290,6 +329,7 @@ export default function Home() {
           {[
             ["chapters", "章節閱讀"],
             ["research", "研究地圖"],
+            ["ai", "人工智慧"],
             ["plan", "補件計畫"],
           ].map((x) => (
             <button
@@ -466,6 +506,65 @@ export default function Home() {
           <div className="caution">
             這是由閱讀心得整合出的研究設計草圖，不是已驗證的因果模型；後續仍需以原書、實證文獻與指導意見修正。
           </div>
+        </section>
+      )}
+      {tab === "ai" && (
+        <section className="ai-view">
+          <div className="ai-intro">
+            <div>
+              <div className="section-kicker">KEY TECHNOLOGY EXPLORATION · AI</div>
+              <h2>關鍵科技探索<br /><em>人工智慧 × 臨床社會語言學</em></h2>
+            </div>
+            <div className="ai-summary">
+              <span>TAICA MOOCs · 第五章</span>
+              <p>AI 的高準確率不是終點。真正可用的系統，還要能跨場域保持穩健、讓不同使用者理解、公平對待各群體，並接受持續治理。</p>
+              <a href="https://docs.google.com/document/d/1KKCX0UduewpLieoyoJ8fipFtP_fnh-uSaFzkj6QFT7o/edit?tab=t.bbb178367aj" target="_blank" rel="noreferrer">閱讀完整課程整理 ↗</a>
+            </div>
+          </div>
+
+          <div className="trust-loop" aria-label="可信任人工智慧四個核心面向">
+            <div className="trust-center"><b>可信任 AI</b><small>不只看準確率</small></div>
+            {aiModules.map((m, i) => (
+              <article key={m.id}>
+                <span>0{i + 1}</span><b>{m.title}</b><small>{m.en}</small>
+              </article>
+            ))}
+          </div>
+
+          <div className="ai-modules">
+            {aiModules.map((m) => (
+              <article key={m.id}>
+                <header><span>{m.id}</span><small>{m.en}</small></header>
+                <h3>{m.title}</h3>
+                <p className="module-question">{m.question}</p>
+                <div className="concepts">{m.concepts.map((c) => <span key={c}>{c}</span>)}</div>
+                <div className="amis-link"><b>連回阿美族研究</b><p>{m.amis}</p></div>
+              </article>
+            ))}
+          </div>
+
+          <div className="ai-evaluation">
+            <div>
+              <div className="section-kicker">RESEARCH TRANSLATION</div>
+              <h3>把可信任 AI 變成研究設計</h3>
+              <p>每個模型結果都要回答三個問題：在哪些人身上有效、它依據什麼、出錯時如何處理。</p>
+            </div>
+            <ol>
+              {[
+                ["01", "建立病前基準", "語言生命史、部落／方言、教育、識字、聽力與社會網絡"],
+                ["02", "設計外部驗證", "留一受試者、部落、方言、任務與設備之外的測試"],
+                ["03", "分層檢查公平", "同時報告各群體錯誤率、校準與不確定性"],
+                ["04", "解釋模型依據", "檢查聲學、詞彙句法、敘事語意與社會語言特徵"],
+                ["05", "共同治理生命週期", "由研究者、臨床端與社群共同決定資料及模型用途"],
+              ].map((x) => <li key={x[0]}><span>{x[0]}</span><b>{x[1]}</b><p>{x[2]}</p></li>)}
+            </ol>
+          </div>
+
+          <div className="ai-gap">
+            <small>博士研究缺口</small>
+            <p>目前缺少能同時整合阿美語病前語言生態、跨部落／方言外部驗證、個案層次解釋、公平性評估與原住民族資料主權的高齡神經認知語音研究框架。</p>
+          </div>
+          <div className="source-note">本頁依據「TAICA MOOCs｜關鍵科技探索－人工智慧」第五章課程整理，轉譯為阿美族臨床社會語言學研究的閱讀入口；屬研究設計草圖，非臨床診斷工具。</div>
         </section>
       )}
       {tab === "plan" && (
