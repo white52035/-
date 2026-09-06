@@ -417,6 +417,7 @@ export default function Home() {
     [refQuery, setRefQuery] = useState(""),
     [refPart, setRefPart] = useState("全部"),
     [refCollection, setRefCollection] = useState<"chapters" | "theses">("theses"),
+    [thesisOrder, setThesisOrder] = useState<"newest" | "oldest">("newest"),
     [read, setRead] = useState<number[]>([]);
   useEffect(() => {
     const s = localStorage.getItem("clinical-socio-read");
@@ -439,9 +440,12 @@ export default function Home() {
     (refPart === "全部" || r.part === refPart) &&
     `${r.chapter}${r.authors}${r.title}${r.focus}`.toLowerCase().includes(refQuery.toLowerCase())
   ), [refQuery, refPart]);
-  const filteredTheses = useMemo(() => thesisReferences.filter((r) =>
-    `${r.title}${r.topic}${r.url}`.toLowerCase().includes(refQuery.toLowerCase())
-  ), [refQuery]);
+  const filteredTheses = useMemo(() => {
+    const matches = thesisReferences.filter((r) =>
+      `${r.title}${r.topic}${r.url}`.toLowerCase().includes(refQuery.toLowerCase())
+    );
+    return thesisOrder === "newest" ? matches : [...matches].reverse();
+  }, [refQuery, thesisOrder]);
   const toggle = (n: number) => {
     const next = read.includes(n) ? read.filter((x) => x !== n) : [...read, n];
     setRead(next);
@@ -747,7 +751,7 @@ export default function Home() {
           </div>
           <div className="reference-tools">
             <label className="reference-search"><span>⌕</span><input value={refQuery} onChange={(e)=>setRefQuery(e.target.value)} placeholder="搜尋題名、研究主題或永久識別碼" /></label>
-            {refCollection === "chapters" ? <div className="reference-parts">{["全部","Part I","Part II"].map((p)=><button key={p} className={refPart===p?"active":""} onClick={()=>setRefPart(p)}>{p}</button>)}</div> : <div className="newest-note">↓ 新 → 舊</div>}
+            {refCollection === "chapters" ? <div className="reference-parts">{["全部","Part I","Part II"].map((p)=><button key={p} className={refPart===p?"active":""} onClick={()=>setRefPart(p)}>{p}</button>)}</div> : <button className="thesis-order" onClick={() => setThesisOrder(thesisOrder === "newest" ? "oldest" : "newest")} aria-label={`切換為${thesisOrder === "newest" ? "舊到新" : "新到舊"}排列`} title="切換排列順序"><span aria-hidden="true">⇅</span><b>{thesisOrder === "newest" ? "新 → 舊" : "舊 → 新"}</b></button>}
           </div>
           {refCollection === "chapters" ? <div className="reference-list">
             {filteredReferences.map((r)=><article key={r.chapter}>

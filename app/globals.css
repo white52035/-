@@ -331,7 +331,11 @@ body {
 .reference-collections button:last-child { border-right:0; }
 .reference-collections button.active { background:var(--orange); color:white; }
 .reference-collections b { float:right; font:20px Georgia; }
-.newest-note { color:#f2b39a; font-size:11px; letter-spacing:.14em; white-space:nowrap; }
+.thesis-order { display:inline-flex; align-items:center; gap:9px; border:1px solid #ffffff55; border-radius:22px; background:transparent; color:white; padding:7px 13px; cursor:pointer; white-space:nowrap; }
+.thesis-order:hover,.thesis-order:focus-visible { background:var(--orange); border-color:var(--orange); outline:none; }
+.thesis-order span { color:#f2b39a; font-size:18px; line-height:1; }
+.thesis-order:hover span,.thesis-order:focus-visible span { color:white; }
+.thesis-order b { font-size:11px; letter-spacing:.12em; }
 .reference-search { display:flex; align-items:center; gap:10px; width:min(100%,520px); color:white; }
 .reference-search input { width:100%; border:0; border-bottom:1px solid #ffffff67; background:transparent; color:white; padding:9px 2px; outline:0; font-size:14px; }
 .reference-search input::placeholder { color:#aebdb6; }
