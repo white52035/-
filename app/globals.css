@@ -58,7 +58,7 @@ body {
 }
 .topbar nav {
   display: flex;
-  gap: 28px;
+  gap: clamp(10px, 1.5vw, 28px);
 }
 .topbar button {
   border: 0;
@@ -68,6 +68,7 @@ body {
   border-bottom: 2px solid transparent;
   cursor: pointer;
   font-size: 14px;
+  white-space: nowrap;
 }
 .topbar button.active {
   color: var(--ink);
@@ -313,10 +314,42 @@ body {
 }
 .research-view,
 .plan-view,
-.ai-view {
+.ai-view,
+.references-view {
   padding: 80px 7vw 100px;
   min-height: 800px;
 }
+.references-head { display:flex; justify-content:space-between; align-items:end; gap:40px; margin-bottom:35px; }
+.references-head h2 { font:700 clamp(48px,6vw,82px)/1 Georgia,"Noto Serif TC",serif; margin:18px 0; }
+.references-head p { max-width:700px; color:#566a62; line-height:1.8; }
+.reference-count { display:flex; align-items:baseline; white-space:nowrap; border-left:3px solid var(--orange); padding-left:18px; }
+.reference-count strong { color:var(--orange); font:44px Georgia; }
+.reference-count span { color:#718078; font-size:12px; }
+.reference-tools { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:18px 22px; background:var(--ink); }
+.reference-search { display:flex; align-items:center; gap:10px; width:min(100%,520px); color:white; }
+.reference-search input { width:100%; border:0; border-bottom:1px solid #ffffff67; background:transparent; color:white; padding:9px 2px; outline:0; font-size:14px; }
+.reference-search input::placeholder { color:#aebdb6; }
+.reference-parts { display:flex; gap:7px; }
+.reference-parts button { border:1px solid #ffffff55; color:#c7d2cd; background:transparent; border-radius:20px; padding:7px 13px; cursor:pointer; }
+.reference-parts button.active { background:var(--orange); border-color:var(--orange); color:white; }
+.reference-list { border:1px solid var(--line); border-top:0; }
+.reference-list article { display:grid; grid-template-columns:100px 1fr; background:var(--cream); border-top:1px solid var(--line); }
+.reference-list article:first-child { border-top:0; }
+.reference-number { padding:27px; border-right:1px solid var(--line); display:flex; flex-direction:column; color:var(--orange); }
+.reference-number span { font-size:9px; letter-spacing:.15em; }
+.reference-number b { font:30px Georgia; }
+.reference-entry { padding:24px 30px; }
+.reference-meta { display:flex; align-items:center; gap:12px; }
+.reference-meta span { background:#dce6de; padding:5px 8px; font-size:9px; letter-spacing:.12em; }
+.reference-meta small { color:#79857f; }
+.reference-entry p { font:17px/1.7 Georgia,"Noto Serif TC",serif; margin:14px 0; padding-left:30px; text-indent:-30px; }
+.reference-entry a { display:inline-flex; align-items:center; gap:8px; color:var(--ink); font-size:11px; text-decoration:none; border-bottom:1px solid var(--orange); padding-bottom:3px; }
+.reference-entry a span { background:var(--orange); color:white; padding:3px 5px; font-size:8px; }
+.reference-entry a b { color:var(--orange); }
+.reference-provenance { margin-top:25px; padding:25px 30px; background:#eee9dc; border-left:3px solid var(--orange); }
+.reference-provenance b { font-size:12px; letter-spacing:.12em; color:var(--orange); }
+.reference-provenance p { line-height:1.7; color:#53675f; }
+.reference-provenance a { color:var(--ink); font-size:12px; font-weight:bold; }
 .ai-intro { display:grid; grid-template-columns:1.25fr .75fr; gap:7vw; align-items:end; margin-bottom:60px; }
 .ai-intro h2 { font:700 clamp(42px,5.5vw,78px)/1.02 Georgia,"Noto Serif TC",serif; letter-spacing:-.035em; margin:18px 0 0; }
 .ai-intro h2 em { color:var(--orange); font-style:normal; }
@@ -576,6 +609,7 @@ footer p {
   }
   .topbar nav button {
     color: #bdc8c2;
+    font-size: 12px;
   }
   .notion-link {
     display: none;
@@ -605,9 +639,16 @@ footer p {
   }
   .research-view,
   .plan-view,
-  .ai-view {
+  .ai-view,
+  .references-view {
     padding: 60px 22px 100px;
   }
+  .references-head { align-items:start; flex-direction:column; gap:10px; }
+  .reference-tools { align-items:stretch; flex-direction:column; }
+  .reference-list article { grid-template-columns:68px 1fr; }
+  .reference-number { padding:20px 14px; }
+  .reference-entry { padding:20px 18px; }
+  .reference-entry p { font-size:15px; }
   .ai-intro,.ai-evaluation { grid-template-columns:1fr; }
   .ai-course-stats { grid-template-columns:repeat(2,1fr); }
   .ai-course-stats div:nth-child(2) { border-right:0; }

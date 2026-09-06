@@ -11,6 +11,14 @@ type Chapter = {
   gap: string;
   tags: string[];
 };
+type ReferenceItem = {
+  chapter: number;
+  part: "Part I" | "Part II";
+  authors: string;
+  title: string;
+  focus: string;
+  doi: string;
+};
 const raw = [
   [
     1,
@@ -337,12 +345,38 @@ const aiChapters = [
   },
 ];
 
+const references: ReferenceItem[] = [
+  [1,"Part I","Britain, D., & Matsumoto, K.","Language, communities, networks and practices","語言社群、社會網絡、實踐社群","10.1002/9780470754856.ch1"],
+  [2,"Part I","Maclagan, M.","Regional and social variation","區域方言、社會變異、差異與障礙","10.1002/9780470754856.ch2"],
+  [3,"Part I","Guendouzi, J.","Language and gender","性別、互動權力、臨床偏誤","10.1002/9780470754856.ch3"],
+  [4,"Part I","Edwards, J.","Bilingualism and multilingualism","雙語連續體、語言維護、情境能力","10.1002/9780470754856.ch4"],
+  [5,"Part I","Müller, N., & Ball, M. J.","Code-switching and diglossia","語碼轉換、雙層語言、溝通勝任力","10.1002/9780470754856.ch5"],
+  [6,"Part I","Damico, J. S., Simmons-Mackie, N., & Hawley, H.","Language and power","臨床權力、話語控制、共同建構","10.1002/9780470754856.ch6"],
+  [7,"Part I","Taylor, N., & Mendoza-Denton, N.","Language and culture","文化、身分、多模態社會意義","10.1002/9780470754856.ch7"],
+  [8,"Part I","Wolfram, W.","African American English","非主流方言、語言正義、臨床誤判","10.1002/9780470754856.ch8"],
+  [9,"Part I","Watt, D., & Smith, J.","Language change","語言變遷、年齡分級、創新與病理","10.1002/9780470754856.ch9"],
+  [10,"Part I","Tonkin, H.","Language planning","語言政策、標準化、權利與市場","10.1002/9780470754856.ch10"],
+  [11,"Part I","Preston, D. R., & Robinson, G. C.","Dialect perception and attitudes to variation","方言感知、態度、刻板印象","10.1002/9780470754856.ch11"],
+  [12,"Part II","Roberts, J.","Acquisition of sociolinguistic variation","兒童習得、變異規則、語言社會化","10.1002/9780470754856.ch12"],
+  [13,"Part II","Hua, Z., & Wei, L.","Bi- and multilingual language acquisition","多語習得、輸入品質、語碼混用","10.1002/9780470754856.ch13"],
+  [14,"Part II","Oetting, J. B.","Assessing language in children who speak a nonmainstream dialect of English","公平評估、動態評量、非字重複","10.1002/9780470754856.ch14"],
+  [15,"Part II","Wei, L., Miller, N., Dodd, B., & Hua, Z.","Childhood bilingualism: Distinguishing difference from disorder","雙語兒童、差異與障礙","10.1002/9780470754856.ch15"],
+  [16,"Part II","Clopper, C. G., & Pisoni, D. B.","Speech perception, hearing impairment and linguistic variation","語音感知、聽障、說話者變異","10.1002/9780470754856.ch16"],
+  [17,"Part II","Gitterman, M. R.","Aphasia in multilingual populations","多語失語症、復原模式、跨語言評估","10.1002/9780470754856.ch17"],
+  [18,"Part II","Patterson, J. L., & Rodríguez, B. L.","Designing assessments for multilingual children","多語評估、個案史、脈絡一致性","10.1002/9780470754856.ch18"],
+  [19,"Part II","Damico, J. S., Nelson, R. L., & Bryan, L.","Literacy as a sociolinguistic process for clinical purposes","讀寫實踐、失讀症、功能性介入","10.1002/9780470754856.ch19"],
+  [20,"Part II","Lucas, C., Bayley, R., & Kelly, A. B.","The sociolinguistics of sign languages","手語變異、聾人社群、接觸簽署","10.1002/9780470754856.ch20"],
+  [21,"Part II","Isaac, K. M.","Managing linguistic diversity in the clinic: Interpreters in speech-language pathology","口譯協作、跨文化溝通、臨床治理","10.1002/9780470754856.ch21"],
+].map(([chapter,part,authors,title,focus,doi])=>({chapter,part,authors,title,focus,doi})) as ReferenceItem[];
+
 export default function Home() {
   const [query, setQuery] = useState(""),
     [group, setGroup] = useState("全部"),
     [selected, setSelected] = useState(1),
     [tab, setTab] = useState("chapters"),
     [aiChapter, setAiChapter] = useState(1),
+    [refQuery, setRefQuery] = useState(""),
+    [refPart, setRefPart] = useState("全部"),
     [read, setRead] = useState<number[]>([]);
   useEffect(() => {
     const s = localStorage.getItem("clinical-socio-read");
@@ -361,6 +395,10 @@ export default function Home() {
   );
   const current = chapters[selected - 1];
   const currentAi = aiChapters[aiChapter - 1];
+  const filteredReferences = useMemo(() => references.filter((r) =>
+    (refPart === "全部" || r.part === refPart) &&
+    `${r.chapter}${r.authors}${r.title}${r.focus}`.toLowerCase().includes(refQuery.toLowerCase())
+  ), [refQuery, refPart]);
   const toggle = (n: number) => {
     const next = read.includes(n) ? read.filter((x) => x !== n) : [...read, n];
     setRead(next);
@@ -380,6 +418,7 @@ export default function Home() {
             ["chapters", "章節閱讀"],
             ["research", "研究地圖"],
             ["ai", "人工智慧"],
+            ["references", "文獻參考"],
             ["plan", "補件計畫"],
           ].map((x) => (
             <button
@@ -647,6 +686,33 @@ export default function Home() {
             <p>目前缺少能同時整合阿美語病前語言生態、跨部落／方言外部驗證、個案層次解釋、公平性評估與原住民族資料主權的高齡神經認知語音研究框架。</p>
           </div>
           <div className="source-note">本頁依據「TAICA MOOCs｜關鍵科技探索－人工智慧」第一至第五章完整課程整理，轉譯為阿美族臨床社會語言學研究的閱讀入口；屬研究設計草圖，非臨床診斷工具。</div>
+        </section>
+      )}
+      {tab === "references" && (
+        <section className="references-view">
+          <div className="references-head">
+            <div>
+              <div className="section-kicker">CHAPTER REFERENCES · APA 7</div>
+              <h2>文獻參考</h2>
+              <p>依《臨床社會語言學》21章整理章節原典，保留章節歸屬、研究焦點與可查證的DOI永久連結。</p>
+            </div>
+            <div className="reference-count"><strong>{filteredReferences.length}</strong><span>／21章文獻</span></div>
+          </div>
+          <div className="reference-tools">
+            <label className="reference-search"><span>⌕</span><input value={refQuery} onChange={(e)=>setRefQuery(e.target.value)} placeholder="搜尋作者、章名或研究主題" /></label>
+            <div className="reference-parts">{["全部","Part I","Part II"].map((p)=><button key={p} className={refPart===p?"active":""} onClick={()=>setRefPart(p)}>{p}</button>)}</div>
+          </div>
+          <div className="reference-list">
+            {filteredReferences.map((r)=><article key={r.chapter}>
+              <div className="reference-number"><span>CH.</span><b>{String(r.chapter).padStart(2,"0")}</b></div>
+              <div className="reference-entry">
+                <div className="reference-meta"><span>{r.part}</span><small>{r.focus}</small></div>
+                <p>{r.authors} (2005). {r.title}. In M. J. Ball (Ed.), <i>Clinical sociolinguistics</i>. Blackwell Publishing.</p>
+                <a href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer"><span>DOI</span>{r.doi}<b>↗</b></a>
+              </div>
+            </article>)}
+          </div>
+          <div className="reference-provenance"><b>來源與界線</b><p>章名與作者依指定Google文件整理；DOI已逐章以Crossref書目資料核對。此區列出各章原典，不將閱讀心得中的未完整書目人名或案例自行擴充為正式引用。</p><a href="https://docs.google.com/document/d/1J7xyJ0r_9L6q6xOnYD_RA8o9kN33zXWJYVBv7zsjHWQ/edit" target="_blank" rel="noreferrer">開啟原始整理文件 ↗</a></div>
         </section>
       )}
       {tab === "plan" && (
