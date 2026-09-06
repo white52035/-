@@ -319,11 +319,34 @@ def save_pipeline_figure(path: Path) -> None:
     plt.close(fig)
 
 
+def save_ai_path_figure(path: Path) -> None:
+    fig, ax = plt.subplots(figsize=(7.2, 4.15), layout="constrained")
+    ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
+    stages = [
+        ("01", "技術底座", "演進・資料・運算"),
+        ("02", "臨床決策", "問題・模型・驗證"),
+        ("03", "特徵辨識", "CNN・風險・責任"),
+        ("04", "語言模型", "Token・語意・生成"),
+        ("05", "可信任治理", "穩健・解釋・公平"),
+    ]
+    xs = [.025, .22, .415, .61, .805]
+    for i, ((num, title, detail), x) in enumerate(zip(stages, xs)):
+        rounded(ax, (x, .52), (.17, .27), f"{num}\n{title}\n{detail}", "#DCE6DE" if i % 2 == 0 else "#F7F3EA", fontsize=9.5)
+        if i < 4:
+            ax.add_patch(FancyArrowPatch((x+.17, .655), (xs[i+1], .655), arrowstyle="-|>", mutation_scale=14, color=f"#{ORANGE}", linewidth=1.4))
+    rounded(ax, (.18, .13), (.64, .20), "阿美族研究主軸：病前語言生態 × 語言／認知特徵 × 外部驗證 × 社群治理", "#F1DFD5", edge=ORANGE, fontsize=10.5)
+    for x in xs:
+        ax.add_patch(FancyArrowPatch((x+.085, .51), (.50, .33), arrowstyle="-|>", mutation_scale=11, color=f"#{ORANGE}", linewidth=.9, alpha=.65))
+    ax.text(.5, .92, "五章人工智慧知識路徑與研究轉譯", ha="center", fontsize=11.5, weight="bold", color=f"#{INK}")
+    fig.savefig(path, dpi=220, bbox_inches=None)
+    plt.close(fig)
+
+
 def make_figures() -> list[Path]:
     FIGURES.mkdir(parents=True, exist_ok=True)
     configure_matplotlib()
-    paths = [FIGURES / "figure-1-context.png", FIGURES / "figure-2-dual-axis.png", FIGURES / "figure-3-pipeline.png"]
-    save_context_figure(paths[0]); save_dual_axis_figure(paths[1]); save_pipeline_figure(paths[2])
+    paths = [FIGURES / "figure-1-context.png", FIGURES / "figure-2-dual-axis.png", FIGURES / "figure-3-pipeline.png", FIGURES / "figure-4-ai-path.png"]
+    save_context_figure(paths[0]); save_dual_axis_figure(paths[1]); save_pipeline_figure(paths[2]); save_ai_path_figure(paths[3])
     return paths
 
 
@@ -360,7 +383,7 @@ def build_doc(figures: list[Path]) -> None:
     p = doc.add_paragraph(); p.paragraph_format.space_after = Pt(34)
     set_run_font(p.add_run("以高齡阿美族語、多語生命史與文化公平評估為研究轉譯焦點"), size=14, color=ORANGE)
     table = doc.add_table(rows=3, cols=2); set_table_widths(table,[3.6,11.8]); set_table_borders(table,color="FFFFFF",size=0)
-    for i,(k,v) in enumerate([("文件型態","APA 第 7 版格式之研究整理包"),("字體與版面","標楷體；內文左右對齊；雙行距；四邊 1 吋"),("整理日期","2026 年 8 月 27 日")]):
+    for i,(k,v) in enumerate([("文件型態","APA 第 7 版格式之研究整理包"),("字體與版面","標楷體；內文左右對齊；雙行距；四邊 1 吋"),("整理日期","2026 年 9 月 6 日")]):
         set_cell_shading(table.cell(i,0), INK); set_cell_shading(table.cell(i,1), CREAM)
         for c in table.rows[i].cells: set_cell_margins(c,160,160,160,160)
         set_run_font(table.cell(i,0).paragraphs[0].add_run(k),size=10,bold=True,color="FFFFFF")
@@ -369,7 +392,7 @@ def build_doc(figures: list[Path]) -> None:
     doc.add_page_break()
 
     add_heading(doc,"摘要")
-    add_text(doc,"本整理包將《Clinical Sociolinguistics》（Ball, 2005）21 章閱讀心得轉譯為研究設計資源，聚焦社會網絡、多語生命史、臨床公平性、識字／語言社會化與語群個案五個主題群。文件以高齡阿美族語與神經認知研究為情境，彙整章節資料、變項操作化、概念路徑、雙軸證據框架、研究缺口優先序與參與式資料流程。每一圖表均附阿美族相關研究的可點擊連結與連接說明，以便追索證據與延伸閱讀。")
+    add_text(doc,"本整理包將《Clinical Sociolinguistics》（Ball, 2005）21章閱讀心得及《關鍵科技探索—人工智慧》五章課程整理轉譯為研究設計資源。文件以高齡阿美族語與神經認知研究為情境，彙整章節資料、變項操作化、概念路徑、人工智慧知識地圖、雙軸證據框架、研究缺口優先序與參與式資料流程。每一圖表均附阿美族相關研究的可點擊連結與連接說明，以便追索證據與延伸閱讀。")
     add_heading(doc,"使用與判讀原則",2)
     for text in [
         "差異不等於障礙：方言、語碼轉換、識字經驗與文化熟悉度必須納入低分的替代解釋。",
@@ -440,6 +463,32 @@ def build_doc(figures: list[Path]) -> None:
     ],[3.0,4.2,5.1,3.1])
     add_note(doc,"本表將六項阿美族／原住民族研究定位為『研究設計參照』，不把不同研究目的、樣本與方法合併成效果量；原文書目頁可由下列連結逐項查核。",[("語言活力",URLS["chen"]),("數位民族誌",URLS["hast"]),("家庭語言去殖民化",URLS["lakaw"]),("文化敏感音樂治療",URLS["chang"]),("健康識能轉譯",URLS["hsiao"]),("跨文化醫病溝通",URLS["chuan"])])
 
+    doc.add_page_break()
+    add_heading(doc,"關鍵科技探索—人工智慧：五章研究轉譯")
+    add_label_title(doc,"表",5,"人工智慧五章、主題單元與阿美族研究連接")
+    add_table(doc,["章／定位","主題單元","研究轉譯","阿美族研究連接"],[
+        ["第1章／技術底座","AI演進、ANN、機器學習、No-Code、CPU／GPU、資料庫","比較臨床特徵、語言特徵及病前語言生態的增量價值","以語言活力、代間傳承及使用領域建立病前基準"],
+        ["第2章／臨床決策","問題定義、資料前處理、決策樹與迴歸、模型評估","以受試者切分、校準、敏感度、特異度及錯誤代價評估","避免把方言、聽力、教育與任務陌生造成的低分病理化"],
+        ["第3章／特徵辨識","像素與特徵圖、CNN、自動駕駛風險與責任","將影像局部特徵學習類比到語音頻譜；檢查設備與背景捷徑","跨錄音設備、場域、部落及方言進行外部驗證"],
+        ["第4章／語言模型","NLP、Token、詞向量、Transformer、BERT、GPT","比較字元、子詞與詞素切分；保存語碼轉換及敘事脈絡","檢驗通用切詞器對阿美語構詞與低資源語料的不公平"],
+        ["第5章／可信任治理","穩健性、可解釋性、公平性、責任與Deepfake","整合跨場域驗證、個案解釋、群體錯誤率與生命週期治理","採分層同意、社群共同解釋、用途限制與可撤回機制"],
+    ],[2.5,4.0,5.0,4.1])
+    add_note(doc,"陳誼誠的語言活力研究可為第一、二章提供代間與使用領域基準；Hast及Sifo Lakaw的研究則把數位平台、家庭語言實踐、社群參與與去殖民化治理連接到第四、五章。",[("陳誼誠（2017）",URLS["chen"]),("Hast（2023）",URLS["hast"]),("Sifo Lakaw（2024）",URLS["lakaw"])])
+
+    add_label_title(doc,"圖",4,"五章人工智慧知識路徑與阿美族研究主軸")
+    p=doc.add_paragraph(); p.alignment=WD_ALIGN_PARAGRAPH.CENTER; p.paragraph_format.space_after=Pt(0); p.add_run().add_picture(str(figures[3]),width=Inches(6.25))
+    add_note(doc,"本圖把五章串成由技術底座到可信任治理的路徑；阿美族研究主軸不是末端應用，而是同時約束問題定義、資料、模型與治理。語言活力、數位實踐社群及家庭語言去殖民化研究可分別支撐病前基準、平台語料與社群治理。",[("語言活力研究",URLS["chen"]),("數位民族誌",URLS["hast"]),("家庭語言去殖民化",URLS["lakaw"])])
+
+    add_label_title(doc,"表",6,"人工智慧整合研究缺口與可驗證設計")
+    add_table(doc,["研究缺口","風險","可驗證設計","與阿美族研究的關係"],[
+        ["病前語言生態未進入模型","把語言轉移或少用誤認為認知退化","比較加入病前語言生態前後的效能、校準與錯誤個案","連接語言活力、代間傳承與使用領域研究"],
+        ["阿美語Tokenization缺少比較","詞素被過度切碎，與華語比較不公平","比較字元、子詞、詞素與語言學導向切分","由族語使用者驗證構詞與語碼轉換的功能"],
+        ["跨部落／方言外部驗證不足","模型記住來源或錄音條件","留一部落、留一方言、跨設備與跨任務測試","避免單一場域被誤當成全體阿美族"],
+        ["個案解釋缺少社會語言層","方言、教育或識字被當成疾病特徵","以反事實與特徵貢獻檢查替代解釋，交由社群複核","連接家庭語言實踐、文化健康與跨文化溝通"],
+        ["AI生命週期治理尚未操作化","同意被擴張到模型再利用或公開生成","分層同意、用途登錄、撤回演練、事件通報與定期回饋","將資料主權落實為可稽核、可撤回的治理程序"],
+    ],[4.0,3.8,4.8,3.0])
+    add_note(doc,"Sifo Lakaw及Hast均顯示族語資料的家庭、社群與數位平台脈絡不能被技術流程取代；蕭惠美與全俊儒則支撐文化轉譯、醫療資源、信任及跨文化溝通必須進入模型驗證。",[("Sifo Lakaw（2024）",URLS["lakaw"]),("Hast（2023）",URLS["hast"]),("蕭惠美（2025）",URLS["hsiao"]),("全俊儒（2025）",URLS["chuan"])])
+
     add_heading(doc,"整合後的研究主張")
     add_text(doc,"若要區分高齡阿美語使用者的正常社會語言變化、語言使用減少／磨損與可能的神經認知變化，研究單位不能只是一份族語版測驗。較穩健的設計需要同時保存個人多語生命史、網絡與共同實踐、感官及健康背景、自然語料、結構式任務、口譯互動軌跡，以及社群對結果的共同詮釋。")
     add_text(doc,"最優先的證據缺口是：阿美語方言與任務公平性、病前雙語基線、自然互動與臨床任務的效標連結，以及可操作的資料主權／撤回機制。這些缺口決定研究能否把『不同』與『病理』清楚分開。")
@@ -463,6 +512,7 @@ def build_doc(figures: list[Path]) -> None:
     add_text(doc,"圖 1：四個水平方塊由左至右排列，依序為生命史與制度脈絡、社會網絡與共同實踐、語言使用量／優勢／方言、任務中的語言表現；下方列出教育識字、聽力、健康史、任務熟悉度與口譯者效應等調節或混淆因素。",size=10,line=1.5)
     add_text(doc,"圖 2：二乘二矩陣，橫軸為臨床／認知證據強度，縱軸為社會語言脈絡整合度；右上象限代表文化公平的多語臨床評估，是本研究設計的目標位置。",size=10,line=1.5)
     add_text(doc,"圖 3：七階段流程依序為共同定義問題、多語生命史與同意、聽力／健康背景、自然互動語料、雙語／方言任務、社群共同詮釋、分級保存／撤回／回饋。",size=10,line=1.5)
+    add_text(doc,"圖 4：五個水平階段由左至右排列，依序為技術底座、臨床決策、特徵辨識、語言模型與可信任治理；五者共同指向下方的阿美族研究主軸，包括病前語言生態、語言／認知特徵、外部驗證與社群治理。",size=10,line=1.5)
 
     props = doc.core_properties
     props.title = "《臨床社會語言學》圖表、研究脈絡與研究缺口整理"

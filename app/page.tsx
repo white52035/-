@@ -415,10 +415,13 @@ export default function Home() {
             className="download-pack"
           href="./clinical-sociolinguistics-apa7-research-pack.docx"
             download
+            aria-label="下載APA 7 Word研究整合包"
           >
-            <span>↓</span>
-            <b>下載 APA 7 Word 研究包</b>
-            <small>圖表數據 · 脈絡圖 · 研究缺口 · 阿美族研究連結</small>
+            <span className="download-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" role="img"><path d="M14 5h14l8 8v25a5 5 0 0 1-5 5H14a5 5 0 0 1-5-5V10a5 5 0 0 1 5-5Z"/><path d="M28 5v9h8M23 19v13m-5-5 5 5 5-5M16 37h14"/></svg>
+            </span>
+            <span className="download-copy"><b>下載APA 7 Word研究整合包</b><small>全部圖表數據 · 五章AI脈絡圖 · 研究缺口 · 阿美族研究連結</small></span>
+            <span className="download-format">DOCX</span>
           </a>
         </div>
         <div className="hero-stats">
