@@ -20,6 +20,15 @@ type ReferenceItem = {
   doi: string;
 };
 type ThesisReference = { title: string; url: string; topic: string };
+type FiveMinuteSegment = { time: string; label: string; text: string };
+
+const chapterOneBrief: FiveMinuteSegment[] = [
+  { time: "0:00–0:35", label: "開場與核心問題", text: "各位好，我今天要報告的是第一章〈Language, Communities, Networks and Practices〉。這一章真正關心的，不只是如何定義語言社群，而是：我們要把一個人的語言放在什麼社會脈絡裡，才能理解他為什麼這樣說話？作者提供三個彼此連接、但研究焦點不同的視角：speech community、social network，以及 community of practice。" },
+  { time: "0:35–2:05", label: "三個核心概念", text: "第一，speech community，也就是語言社群，關心較大的群體是否共享語言規範。成員實際說法可以不同，但可能共同知道哪些形式較正式、較有聲望。這提醒我們，標準語並不是完全中立的標準，也和教育、階級及權力有關。第二，social network 把視角拉回個人的實際關係。一種語言能否維持，常取決於每天和誰說話，以及關係是否密切。搬遷、退休、喪偶或朋友減少，都可能縮小網絡，使語言使用量下降。第三，community of practice 不只問和誰互動，更問大家一起做什麼。教會、祭儀、農作、捕魚或都市工作，會形成不同的語彙、說話方式與身分意義。三個概念不是互相競爭，而是從共享規範、人際連結到共同活動，逐層看見語言如何活在生活中。" },
+  { time: "2:05–3:05", label: "原住民族語研究的啟示", text: "把這個框架放回臺灣原住民族語研究，可以看到既有研究已涵蓋語言維持與轉移、語言活力、族語復振、政策、認證、沉浸式教育、兒童語言選擇，以及數位實踐社群。第 1 章帶來的補充，不是說過去研究缺少社會語言學，而是讓研究再往下一層追問。除了問阿美語在哪些領域使用，還要問：是哪些人、在什麼關係中、透過哪些反覆出現的共同活動使用與維持阿美語？研究視角因此可以從族群、部落、使用領域，深入到人、關係、共同活動與語言實踐。" },
+  { time: "3:05–4:30", label: "研究方向與缺口", text: "這一章對我未來研究最重要的提醒，是不能直接把高齡阿美族人的語言表現下降解釋為認知退化。同樣是七十五歲，一位長者可能已搬離部落，日常主要使用華語；另一位仍固定參與教會和部落活動，持續使用阿美語。即使認知狀態相同，兩人的測驗表現也可能不同。因此，研究除了建立認知基線，也要建立病前語言生態，包括語言習得史、長期使用量、方言、語言優勢、重要互動對象與共同實踐。未來研究可以比較認知狀態相近、但阿美語社會網絡不同的長者；也可比較標準化任務與生命故事、農作或教會經驗等自然語料。若控制語言使用、聽力、教育及社會網絡後，某些特徵仍穩定地和認知狀態相關，才適合進一步驗證為研究性的語言標記。" },
+  { time: "4:30–5:00", label: "結論", text: "總結來說，第 1 章讓我把研究問題從『認知退化會讓阿美語變成什麼樣子』，往前推到『這個人的阿美語原本如何活在生活裡』。臨床軸線與社會語言軸線必須同時存在。只有理解一個人的社群、社會網絡與生活實踐，我們才可能更謹慎地區分正常老化、語言使用減少、生活環境改變，以及神經認知疾病相關的語言變化。這就是本章從社會語言學走進臨床社會語言學的關鍵。" },
+];
 const raw = [
   [
     1,
@@ -418,6 +427,8 @@ export default function Home() {
     [refPart, setRefPart] = useState("全部"),
     [refCollection, setRefCollection] = useState<"chapters" | "theses">("theses"),
     [thesisOrder, setThesisOrder] = useState<"newest" | "oldest">("newest"),
+    [briefOpen, setBriefOpen] = useState(true),
+    [briefCopied, setBriefCopied] = useState(false),
     [read, setRead] = useState<number[]>([]);
   useEffect(() => {
     const s = localStorage.getItem("clinical-socio-read");
@@ -450,6 +461,11 @@ export default function Home() {
     const next = read.includes(n) ? read.filter((x) => x !== n) : [...read, n];
     setRead(next);
     localStorage.setItem("clinical-socio-read", JSON.stringify(next));
+  };
+  const copyBrief = async () => {
+    await navigator.clipboard.writeText(chapterOneBrief.map((s) => `${s.label}\n${s.text}`).join("\n\n"));
+    setBriefCopied(true);
+    window.setTimeout(() => setBriefCopied(false), 1800);
   };
   return (
     <main>
@@ -595,6 +611,20 @@ export default function Home() {
             <blockquote>
               「與標準不同」不等於「錯誤」；「低分」也不等於「疾病」。
             </blockquote>
+            {current.n === 1 && (
+              <section className="five-minute-brief" aria-labelledby="five-minute-title">
+                <header>
+                  <div className="brief-icon" aria-hidden="true">5′</div>
+                  <div><span>ORAL BRIEFING · CHAPTER 01</span><h3 id="five-minute-title">5分鐘精華版</h3><p>可直接口述的現場報告稿 · 約五分鐘</p></div>
+                  <button className="brief-toggle" onClick={() => setBriefOpen(!briefOpen)} aria-expanded={briefOpen} aria-controls="chapter-one-brief">{briefOpen ? "收合 −" : "展開 +"}</button>
+                </header>
+                {briefOpen && <div id="chapter-one-brief" className="brief-content">
+                  <div className="brief-toolbar"><p><b>講述主線</b> 三個概念 → 原住民族語研究 → 高齡阿美語研究缺口</p><button onClick={copyBrief}>{briefCopied ? "✓ 已複製" : "複製口述稿"}</button></div>
+                  <ol>{chapterOneBrief.map((segment) => <li key={segment.time}><div className="brief-time"><span>{segment.time}</span><i aria-hidden="true" /></div><div><h4>{segment.label}</h4><p>{segment.text}</p></div></li>)}</ol>
+                  <footer><b>現場提示</b><span>以自然語速報告；英文概念第一次出現時說明中文意義，後續直接使用英文術語即可。</span></footer>
+                </div>}
+              </section>
+            )}
             <div className="reader-actions">
               <button onClick={() => toggle(current.n)}>
                 {read.includes(current.n) ? "✓ 已完成閱讀" : "標記為已讀"}

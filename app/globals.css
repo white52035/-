@@ -293,6 +293,29 @@ body {
   background: #eee9dc;
   font: italic 22px/1.6 Georgia;
 }
+.five-minute-brief { margin:46px 0 10px; border:1px solid var(--line); background:#fffdf7; }
+.five-minute-brief > header { display:grid; grid-template-columns:64px 1fr auto; gap:18px; align-items:center; padding:23px 25px; background:var(--ink); color:white; }
+.brief-icon { width:56px; height:56px; display:grid; place-items:center; border:1px solid #ffffff55; border-radius:50%; color:#f1a180; font:700 22px Georgia; }
+.five-minute-brief header span { color:#f1a180; font-size:9px; letter-spacing:.16em; }
+.five-minute-brief header h3 { margin:5px 0 2px; font:28px/1.1 Georgia,"Noto Serif TC",serif; letter-spacing:0; }
+.five-minute-brief header p { margin:0; color:#bdc8c2; font-size:11px; }
+.brief-toggle { border:1px solid #ffffff55; border-radius:20px; background:transparent; color:white; padding:8px 13px; cursor:pointer; }
+.brief-toggle:hover,.brief-toggle:focus-visible { background:var(--orange); border-color:var(--orange); outline:none; }
+.brief-content { padding:25px 28px 28px; }
+.brief-toolbar { display:flex; justify-content:space-between; gap:18px; align-items:center; padding-bottom:20px; border-bottom:1px solid var(--line); }
+.brief-toolbar p { margin:0; color:#52665e; font-size:12px; }
+.brief-toolbar p b { color:var(--orange); margin-right:8px; }
+.brief-toolbar button { flex:none; border:1px solid var(--orange); background:transparent; color:var(--orange); padding:8px 12px; cursor:pointer; }
+.brief-toolbar button:hover,.brief-toolbar button:focus-visible { background:var(--orange); color:white; outline:none; }
+.brief-content ol { list-style:none; padding:0; margin:0; }
+.brief-content li { display:grid; grid-template-columns:92px 1fr; gap:22px; padding:24px 0; border-bottom:1px solid var(--line); }
+.brief-time { display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
+.brief-time span { color:var(--orange); font:14px Georgia; white-space:nowrap; }
+.brief-time i { width:28px; height:2px; background:var(--orange); }
+.brief-content h4 { margin:0 0 10px; font-size:13px; letter-spacing:.1em; }
+.brief-content li p { margin:0; color:#334b43; font:17px/1.85 Georgia,"Noto Serif TC",serif; text-align:justify; }
+.brief-content footer { display:flex; gap:14px; margin-top:22px; padding:16px 18px; background:#eee9dc; color:#53675f; font-size:12px; line-height:1.6; }
+.brief-content footer b { flex:none; color:var(--orange); }
 .reader-actions {
   display: flex;
   justify-content: space-between;
@@ -661,6 +684,13 @@ footer p {
   .reference-number { padding:20px 14px; }
   .reference-entry { padding:20px 18px; }
   .reference-entry p { font-size:15px; }
+  .five-minute-brief > header { grid-template-columns:52px 1fr; padding:20px 18px; }
+  .brief-icon { width:46px; height:46px; font-size:18px; }
+  .brief-toggle { grid-column:1/-1; width:100%; }
+  .brief-content { padding:20px 18px; }
+  .brief-toolbar { align-items:stretch; flex-direction:column; }
+  .brief-toolbar button { align-self:flex-start; }
+  .brief-content li { grid-template-columns:1fr; gap:8px; }
   .ai-intro,.ai-evaluation { grid-template-columns:1fr; }
   .ai-course-stats { grid-template-columns:repeat(2,1fr); }
   .ai-course-stats div:nth-child(2) { border-right:0; }
