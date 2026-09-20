@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { chapterBriefs } from "./fiveMinuteBriefs";
 import QAColumn from "./QAColumn";
+import Glossary from "./Glossary";
 
 type Chapter = {
   n: number;
@@ -478,6 +479,7 @@ export default function Home() {
             ["ai", "人工智慧"],
             ["references", "文獻參考"],
             ["qa", "Q&A專欄"],
+            ["glossary", "補充說明"],
             ["plan", "補件計畫"],
           ].map((x) => (
             <button
@@ -851,6 +853,7 @@ export default function Home() {
         </section>
       )}
       {tab === "qa" && <QAColumn />}
+      {tab === "glossary" && <Glossary />}
       <footer>
         <div>
           <b>Clinical Sociolinguistics</b>
