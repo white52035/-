@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { chapterBriefs } from "./fiveMinuteBriefs";
+import QAColumn from "./QAColumn";
 
 type Chapter = {
   n: number;
@@ -476,6 +477,7 @@ export default function Home() {
             ["research", "研究地圖"],
             ["ai", "人工智慧"],
             ["references", "文獻參考"],
+            ["qa", "Q&A專欄"],
             ["plan", "補件計畫"],
           ].map((x) => (
             <button
@@ -848,6 +850,7 @@ export default function Home() {
           </div>
         </section>
       )}
+      {tab === "qa" && <QAColumn />}
       <footer>
         <div>
           <b>Clinical Sociolinguistics</b>
