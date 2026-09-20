@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { chapterBriefs } from "./fiveMinuteBriefs";
 import QAColumn from "./QAColumn";
 import Glossary from "./Glossary";
+import PPAArticleAnalysis from "./PPAArticleAnalysis";
 
 type Chapter = {
   n: number;
@@ -773,6 +774,7 @@ export default function Home() {
             </div>
             <div className="reference-count"><strong>{refCollection === "theses" ? filteredTheses.length : filteredReferences.length}</strong><span>／{refCollection === "theses" ? "34篇論文" : "21章文獻"}</span></div>
           </div>
+          <PPAArticleAnalysis />
           <div className="reference-collections" role="tablist" aria-label="文獻來源">
             <button className={refCollection === "theses" ? "active" : ""} onClick={() => setRefCollection("theses")}>臺灣博碩士論文知識加值系統 <b>34</b></button>
             <button className={refCollection === "chapters" ? "active" : ""} onClick={() => setRefCollection("chapters")}>書籍章節原典 <b>21</b></button>
