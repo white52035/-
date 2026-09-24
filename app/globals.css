@@ -408,6 +408,48 @@ body {
 .glossary-note { display:flex; gap:24px; margin-top:26px; padding:22px 26px; border-left:3px solid var(--orange); background:#eee9dc; }
 .glossary-note b { flex:none; color:var(--orange); font-size:11px; letter-spacing:.12em; }
 .glossary-note p { margin:0; color:#4d625a; line-height:1.7; }
+.assessment-section { margin-top:85px; padding-top:55px; border-top:1px solid var(--line); }
+.assessment-heading { display:grid; grid-template-columns:1fr minmax(320px,560px); gap:7vw; align-items:end; margin-bottom:34px; }
+.assessment-heading h3 { margin:13px 0 0; font:700 clamp(42px,5vw,70px)/1 Georgia,"Noto Serif TC",serif; }
+.assessment-heading > p { margin:0; padding-top:18px; border-top:3px solid var(--orange); color:#4e635b; font:17px/1.75 Georgia,"Noto Serif TC",serif; }
+.assessment-heading > p b { color:var(--orange); }
+.assessment-cards { display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+.assessment-card { grid-column:span 2; display:flex; flex-direction:column; min-width:0; padding:27px; background:var(--cream); }
+.assessment-card:nth-child(4),.assessment-card:nth-child(5) { grid-column:span 3; }
+.assessment-card > header { display:flex; gap:16px; align-items:center; }
+.assessment-icon { flex:none; width:58px; height:58px; display:grid; place-items:center; border-radius:16px; background:var(--ink); color:white; box-shadow:inset 0 -4px #d7653e; font:700 18px Georgia,"Noto Serif TC",serif; }
+.assessment-card header small { color:var(--orange); font-size:9px; font-weight:bold; letter-spacing:.12em; }
+.assessment-card h4 { margin:4px 0 1px; font:700 23px Georgia,sans-serif; }
+.assessment-card header p { margin:0; color:#6c7b75; font-size:12px; }
+.assessment-card blockquote { margin:23px 0 16px; padding:0 0 0 15px; border-left:3px solid var(--orange); color:var(--ink); font:18px/1.5 Georgia,"Noto Serif TC",serif; }
+.measure-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:17px; }
+.measure-tags span { border:1px solid #bac3bd; border-radius:20px; padding:5px 9px; color:#52675f; font-size:10px; }
+.assessment-reading { flex:1; margin:0; color:#50645d; font-size:13px; line-height:1.75; }
+.assessment-card > a { display:flex; justify-content:space-between; margin-top:20px; padding-top:13px; border-top:1px solid var(--line); color:var(--ink); font-size:11px; font-weight:bold; text-decoration:none; }
+.assessment-card > a span { color:var(--orange); }
+.assessment-card > a:hover { color:var(--orange); }
+.assessment-matrix { margin-top:38px; border:1px solid var(--line); background:var(--cream); }
+.assessment-matrix > header { display:flex; justify-content:space-between; align-items:end; gap:30px; padding:25px 28px; background:var(--ink); color:white; }
+.assessment-matrix header small,.assessment-flow-title small { color:#efa183; font-size:9px; letter-spacing:.15em; }
+.assessment-matrix h4,.assessment-flow h4 { margin:6px 0 0; font:700 25px Georgia,"Noto Serif TC",serif; }
+.assessment-matrix header p { margin:0; color:#bdc9c3; font-size:11px; }
+.matrix-row { display:grid; grid-template-columns:1.3fr repeat(5,1fr); border-top:1px solid var(--line); }
+.matrix-row > * { min-width:0; padding:15px 12px; border-right:1px solid var(--line); text-align:center; font-size:12px; }
+.matrix-row > *:last-child { border-right:0; }
+.matrix-row b { text-align:left; padding-left:24px; font-family:Georgia,"Noto Serif TC",serif; }
+.matrix-head { background:#e9e6dc; color:#62736c; }
+.matrix-head > * { font-size:10px; letter-spacing:.05em; }
+.matrix-row .primary { color:var(--orange); font-size:18px; }
+.assessment-flow { display:grid; grid-template-columns:260px 1fr; gap:35px; margin-top:38px; padding:30px; background:#ece9de; }
+.assessment-flow-title p { color:#5b6c65; font-size:12px; line-height:1.65; }
+.assessment-steps { display:grid; grid-template-columns:repeat(5,1fr); align-items:stretch; }
+.assessment-steps > div { position:relative; display:flex; flex-direction:column; justify-content:center; min-height:105px; padding:18px; border-left:1px solid #c8c5ba; }
+.assessment-steps span { color:var(--orange); font:16px Georgia; }
+.assessment-steps b { margin-top:11px; font-size:11px; line-height:1.45; }
+.assessment-steps i { position:absolute; right:-7px; top:44px; z-index:1; width:14px; height:14px; display:grid; place-items:center; border-radius:50%; background:var(--orange); color:white; font:10px Arial; }
+.assessment-caution { display:flex; gap:25px; margin-top:24px; padding:23px 27px; border-left:3px solid var(--orange); background:var(--ink); color:white; }
+.assessment-caution b { flex:none; color:#efa183; font-size:11px; letter-spacing:.12em; }
+.assessment-caution p { margin:0; color:#c8d3ce; font-size:13px; line-height:1.75; }
 .references-head { display:flex; justify-content:space-between; align-items:end; gap:40px; margin-bottom:35px; }
 .paper-analysis { margin:45px 0 70px; border:1px solid var(--line); background:var(--cream); }
 .paper-head { display:grid; grid-template-columns:1fr auto; gap:35px; align-items:end; padding:34px 38px; background:var(--ink); color:white; }
@@ -832,6 +874,18 @@ footer p {
   .term-map { grid-template-columns:1fr; }
   .term-map i { transform:rotate(90deg); padding:4px; }
   .glossary-note { flex-direction:column; gap:8px; }
+  .assessment-section { margin-top:60px; padding-top:40px; }
+  .assessment-heading { grid-template-columns:1fr; gap:25px; }
+  .assessment-cards { grid-template-columns:1fr; }
+  .assessment-card,.assessment-card:nth-child(4),.assessment-card:nth-child(5) { grid-column:span 1; }
+  .assessment-matrix { overflow-x:auto; }
+  .matrix-table { min-width:680px; }
+  .assessment-matrix > header { align-items:start; flex-direction:column; gap:10px; }
+  .assessment-flow { grid-template-columns:1fr; padding:24px; }
+  .assessment-steps { grid-template-columns:1fr; }
+  .assessment-steps > div { min-height:72px; border-left:0; border-top:1px solid #c8c5ba; }
+  .assessment-steps i { right:auto; left:16px; top:auto; bottom:-7px; transform:rotate(90deg); }
+  .assessment-caution { flex-direction:column; gap:9px; }
   .references-head { align-items:start; flex-direction:column; gap:10px; }
   .paper-head { grid-template-columns:1fr; padding:28px 22px; }
   .paper-head > a { min-width:0; }
