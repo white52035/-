@@ -475,6 +475,30 @@ body {
 .site-topic-grid span { color:var(--orange); font:20px Georgia; }
 .site-topic-grid h4 { margin:18px 0 10px; font:700 19px Georgia,"Noto Serif TC",serif; }
 .site-topic-grid p { margin:0; color:#51655d; font-size:14px; line-height:1.75; }
+.asha-deep-dive { margin:34px; border-top:4px solid var(--ink); }
+.asha-deep-heading { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:end; padding:30px 0 24px; }
+.asha-deep-heading small,.asha-citation small { color:var(--orange); font-size:10px; font-weight:800; letter-spacing:.14em; }
+.asha-deep-heading h3 { margin:9px 0 0; font:700 29px/1.25 Georgia,"Noto Serif TC",serif; }
+.asha-deep-heading p { margin:0; color:#53665e; line-height:1.75; }
+.asha-accordion { border:1px solid var(--line); border-bottom:0; }
+.asha-accordion details { border-bottom:1px solid var(--line); background:#faf8f1; }
+.asha-accordion summary { display:grid; grid-template-columns:54px 1fr 32px; align-items:center; gap:18px; min-height:82px; padding:0 24px; cursor:pointer; list-style:none; transition:background .18s,color .18s; }
+.asha-accordion summary::-webkit-details-marker { display:none; }
+.asha-accordion summary > span { color:var(--orange); font:22px Georgia,serif; }
+.asha-accordion summary div { display:flex; align-items:baseline; gap:14px; }
+.asha-accordion summary b { font:700 21px Georgia,"Noto Serif TC",serif; }
+.asha-accordion summary small { color:#718078; font-size:13px; }
+.asha-accordion summary i { color:var(--orange); font:normal 29px/1 sans-serif; text-align:center; transition:transform .18s; }
+.asha-accordion details[open] summary { background:var(--ink); color:white; }
+.asha-accordion details[open] summary small { color:#cbd6d1; }
+.asha-accordion details[open] summary i { transform:rotate(45deg); color:#f2a287; }
+.asha-analysis-grid { display:grid; grid-template-columns:repeat(3,1fr); }
+.asha-analysis-grid section { padding:25px 24px 27px; border-right:1px solid var(--line); }
+.asha-analysis-grid section:last-child { border-right:0; background:#f1ede1; }
+.asha-analysis-grid small { color:var(--orange); font-size:10px; font-weight:800; letter-spacing:.11em; }
+.asha-analysis-grid p { margin:10px 0 0; color:#465a52; font-size:14px; line-height:1.8; }
+.asha-citation { padding:22px 24px; background:#e9e4d7; border:1px solid var(--line); border-top:0; }
+.asha-citation p { margin:8px 0 0; color:#465a52; font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
 .site-research-link { display:grid; grid-template-columns:280px 1fr; gap:35px; margin:0 34px 34px; padding:30px; background:#ece9de; }
 .site-research-link h4 { margin:8px 0 0; font:700 25px/1.3 Georgia,"Noto Serif TC",serif; }
 .site-research-link ol { list-style:none; padding:0; margin:0; }
@@ -946,6 +970,15 @@ footer p {
   .site-topic-grid { grid-template-columns:1fr; }
   .site-topic-grid section { border-right:0; border-bottom:1px solid var(--line); }
   .site-topic-grid section:last-child { border-bottom:0; }
+  .asha-deep-dive { margin:28px 22px; }
+  .asha-deep-heading { grid-template-columns:1fr; gap:14px; }
+  .asha-accordion summary { grid-template-columns:42px 1fr 26px; gap:10px; padding:0 14px; }
+  .asha-accordion summary div { display:block; }
+  .asha-accordion summary b,.asha-accordion summary small { display:block; }
+  .asha-accordion summary small { margin-top:5px; }
+  .asha-analysis-grid { grid-template-columns:1fr; }
+  .asha-analysis-grid section { border-right:0; border-bottom:1px solid var(--line); }
+  .asha-analysis-grid section:last-child { border-bottom:0; }
   .site-research-link { grid-template-columns:1fr; margin:0 22px 22px; padding:24px; }
   .site-research-link li { grid-template-columns:1fr; gap:6px; }
   .site-use-note { flex-direction:column; gap:8px; }
