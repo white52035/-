@@ -54,5 +54,12 @@ export default function RelatedSites() {
     </article>
 
     <aside className="site-use-note"><b>使用提醒</b><p>ASHA Practice Portal 提供專業實務資訊，但內容以美國專業制度與英語研究為主要背景。應轉譯為臺灣與阿美族語情境，並搭配在地法規、文化脈絡、語言版本及合格專業人員判斷。</p></aside>
+
+    <nav className="site-sync-links" aria-label="內容同步入口">
+      <div><small>CONTENT SYNC</small><b>延伸閱讀與版本來源</b></div>
+      <a href="https://app.notion.com/p/3c326041fe3781358b67eef7607d7298?pvs=204" target="_blank" rel="noreferrer"><span>研究整理</span><b>Notion</b></a>
+      <a href="https://github.com/white52035/-" target="_blank" rel="noreferrer"><span>原始碼與版本</span><b>GitHub</b></a>
+      <a href="https://www.asha.org/practice-portal/clinical-topics/dementia/" target="_blank" rel="noreferrer"><span>臨床實務原典</span><b>ASHA</b></a>
+    </nav>
   </section>;
 }

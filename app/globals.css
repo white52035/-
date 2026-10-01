@@ -485,6 +485,17 @@ body {
 .site-use-note { display:flex; gap:25px; margin-top:24px; padding:22px 26px; border-left:3px solid var(--orange); background:#eee9dc; }
 .site-use-note b { flex:none; color:var(--orange); font-size:11px; letter-spacing:.12em; }
 .site-use-note p { margin:0; color:#4d625a; line-height:1.7; }
+.site-sync-links { display:grid; grid-template-columns:1.25fr repeat(3,1fr); margin-top:24px; border:1px solid var(--line); background:var(--cream); }
+.site-sync-links > div,.site-sync-links > a { min-height:92px; display:flex; flex-direction:column; justify-content:center; padding:20px 24px; border-right:1px solid var(--line); }
+.site-sync-links > *:last-child { border-right:0; }
+.site-sync-links > div { background:var(--ink); color:white; }
+.site-sync-links small { color:#efa183; font-size:10px; letter-spacing:.14em; }
+.site-sync-links > div b { margin-top:7px; font:18px Georgia,"Noto Serif TC",serif; }
+.site-sync-links > a { color:var(--ink); text-decoration:none; transition:background .18s,color .18s; }
+.site-sync-links > a span { color:#6e7d76; font-size:11px; }
+.site-sync-links > a b { margin-top:8px; font:22px Georgia; }
+.site-sync-links > a:hover,.site-sync-links > a:focus-visible { background:var(--orange); color:white; outline:none; }
+.site-sync-links > a:hover span,.site-sync-links > a:focus-visible span { color:#ffe6dc; }
 .references-head { display:flex; justify-content:space-between; align-items:end; gap:40px; margin-bottom:35px; }
 .paper-analysis { margin:45px 0 70px; border:1px solid var(--line); background:var(--cream); }
 .paper-head { display:grid; grid-template-columns:1fr auto; gap:35px; align-items:end; padding:34px 38px; background:var(--ink); color:white; }
@@ -938,6 +949,9 @@ footer p {
   .site-research-link { grid-template-columns:1fr; margin:0 22px 22px; padding:24px; }
   .site-research-link li { grid-template-columns:1fr; gap:6px; }
   .site-use-note { flex-direction:column; gap:8px; }
+  .site-sync-links { grid-template-columns:1fr; }
+  .site-sync-links > div,.site-sync-links > a { min-height:76px; border-right:0; border-bottom:1px solid var(--line); }
+  .site-sync-links > *:last-child { border-bottom:0; }
   .references-head { align-items:start; flex-direction:column; gap:10px; }
   .paper-head { grid-template-columns:1fr; padding:28px 22px; }
   .paper-head > a { min-width:0; }
