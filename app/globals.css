@@ -847,10 +847,15 @@ footer p {
     left: 0;
     right: 0;
     background: var(--ink);
-    justify-content: space-around;
-    padding: 0 18px;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 0 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
   }
   .topbar nav button {
+    flex: 0 0 auto;
     color: #bdc8c2;
     font-size: 12px;
   }
