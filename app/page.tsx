@@ -4,6 +4,7 @@ import { chapterBriefs } from "./fiveMinuteBriefs";
 import QAColumn from "./QAColumn";
 import Glossary from "./Glossary";
 import PPAArticleAnalysis from "./PPAArticleAnalysis";
+import RelatedSites from "./RelatedSites";
 
 type Chapter = {
   n: number;
@@ -481,6 +482,7 @@ export default function Home() {
             ["references", "文獻參考"],
             ["qa", "Q&A專欄"],
             ["glossary", "補充說明"],
+            ["sites", "相關網站"],
             ["plan", "補件計畫"],
           ].map((x) => (
             <button
@@ -856,6 +858,7 @@ export default function Home() {
       )}
       {tab === "qa" && <QAColumn />}
       {tab === "glossary" && <Glossary />}
+      {tab === "sites" && <RelatedSites />}
       <footer>
         <div>
           <b>Clinical Sociolinguistics</b>
