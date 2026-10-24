@@ -5,6 +5,7 @@ import QAColumn from "./QAColumn";
 import Glossary from "./Glossary";
 import PPAArticleAnalysis from "./PPAArticleAnalysis";
 import RelatedSites from "./RelatedSites";
+import RelatedVideos from "./RelatedVideos";
 
 type Chapter = {
   n: number;
@@ -483,6 +484,7 @@ export default function Home() {
             ["qa", "Q&A專欄"],
             ["glossary", "補充說明"],
             ["sites", "相關網站"],
+            ["videos", "相關影片"],
             ["plan", "補件計畫"],
           ].map((x) => (
             <button
@@ -859,6 +861,7 @@ export default function Home() {
       {tab === "qa" && <QAColumn />}
       {tab === "glossary" && <Glossary />}
       {tab === "sites" && <RelatedSites />}
+      {tab === "videos" && <RelatedVideos />}
       <footer>
         <div>
           <b>Clinical Sociolinguistics</b>
