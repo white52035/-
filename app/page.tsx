@@ -519,6 +519,7 @@ export default function Home() {
             ["amis", "阿美族研究核心"],
             ["ai", "人工智慧"],
             ["references", "文獻參考"],
+            ["foreign", "國外文獻"],
             ["qa", "Q&A專欄"],
             ["glossary", "補充說明"],
             ["sites", "相關網站"],
@@ -527,8 +528,15 @@ export default function Home() {
           ].map((x) => (
             <button
               key={x[0]}
-              className={tab === x[0] ? "active" : ""}
-              onClick={() => setTab(x[0])}
+              className={(x[0] === "foreign" ? tab === "references" && refCollection === "foreign" : tab === x[0]) ? "active" : ""}
+              onClick={() => {
+                if (x[0] === "foreign") {
+                  setRefCollection("foreign");
+                  setTab("references");
+                } else {
+                  setTab(x[0]);
+                }
+              }}
             >
               {x[1]}
             </button>
@@ -812,7 +820,7 @@ export default function Home() {
             <div>
               <div className="section-kicker">REFERENCE LIBRARY · PERMANENT LINKS</div>
               <h2>文獻參考</h2>
-              <p>整合《臨床社會語言學》章節原典與臺灣博碩士論文，保留研究焦點及可查證的永久連結。</p>
+              <p>整合國外期刊、《臨床社會語言學》章節原典與臺灣博碩士論文，保留研究焦點及可查證的 DOI／永久連結。</p>
             </div>
             <div className="reference-count"><strong>{refCollection === "theses" ? filteredTheses.length : refCollection === "foreign" ? filteredForeign.length : filteredReferences.length}</strong><span>／{refCollection === "theses" ? "34篇論文" : refCollection === "foreign" ? "2篇國外文獻" : "21章文獻"}</span></div>
           </div>
