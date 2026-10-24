@@ -1,45 +1,6 @@
-const terms = [
-  {
-    term: "cognitive decline",
-    zh: "認知功能退化／認知衰退",
-    note: "描述認知能力相較過去下降的現象；可能與正常老化、疾病或其他因素有關，本身不是特定診斷。",
-  },
-  {
-    term: "cognitive impairment",
-    zh: "認知障礙／認知功能障礙",
-    note: "泛指一項或多項認知功能低於預期或受損，程度與原因不一，不必然等同失智症。",
-  },
-  {
-    term: "MCI",
-    full: "Mild Cognitive Impairment",
-    zh: "輕度認知障礙",
-    note: "有客觀或主觀認知下降，但日常獨立功能大致保留；部分個案可能穩定、改善或進展，不能直接等同早期失智症。",
-  },
-  {
-    term: "dementia",
-    zh: "失智症／認知障礙症",
-    note: "指認知下降已明顯影響日常獨立功能的臨床症候群。臺灣健康與公共溝通常用「失智症」；「認知障礙症」亦見於部分專業脈絡。",
-  },
-  {
-    term: "Alzheimer’s disease",
-    zh: "阿茲海默症",
-    note: "一種特定神經退化性疾病，也是失智症常見病因之一；Alzheimer’s disease 與 dementia 不是完全相同的概念。",
-  },
-  {
-    term: "ADRD",
-    full: "Alzheimer’s Disease and Related Dementias",
-    zh: "阿茲海默症及相關失智症",
-    alt: "亦可依文脈譯為：阿茲海默症相關神經退化性疾病",
-    note: "集合用語，涵蓋阿茲海默症及其他相關失智疾病；實際納入範圍應依研究或政策文件定義。",
-  },
-  {
-    term: "PPA",
-    full: "Primary Progressive Aphasia",
-    zh: "原發性漸進性失語症",
-    alt: "亦稱：原發性進行性失語症",
-    note: "以語言能力逐漸退化為主要早期表現的臨床症候群，包含不同亞型；不能只憑一般找字困難判定。",
-  },
-];
+"use client";
+import { useMemo, useState } from "react";
+import { glossaryTerms, videoSources } from "./medicalTerms";
 
 const assessments = [
   {
@@ -100,19 +61,55 @@ const assessments = [
 ];
 
 export default function Glossary() {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("全部");
+  const [expanded, setExpanded] = useState<string[]>([]);
+  const categories = ["全部", "核心概念", "疾病／症候群", "語言溝通", "腦區／機制", "風險／鑑別"];
+  const filteredTerms = useMemo(() => glossaryTerms.filter(item => {
+    const matchesCategory = category === "全部" || item.category === category;
+    const text = `${item.term} ${item.abbr ?? ""} ${item.zh} ${item.definition}`.toLowerCase();
+    return matchesCategory && text.includes(query.trim().toLowerCase());
+  }), [category, query]);
+  const toggleTerm = (id: string) => setExpanded(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
+
   return <section className="glossary-view">
     <header className="glossary-hero">
       <div><div className="section-kicker">TERMINOLOGY · CLINICAL CONTEXT</div><h2>補充說明</h2></div>
       <div className="glossary-intro"><b>中英術語對照</b><p>同一中文詞在研究、臨床與公共溝通中可能有不同使用習慣。撰寫論文時，建議首次出現同時標示英文，並在全文維持一致。</p></div>
     </header>
 
-    <div className="term-list">
-      {terms.map((item, index) => <article key={item.term}>
-        <div className="term-index">{String(index + 1).padStart(2, "0")}</div>
-        <div className="term-en"><h3>{item.term}</h3>{item.full && <p>{item.full}</p>}</div>
-        <div className="term-zh"><h4>{item.zh}</h4>{item.alt && <small>{item.alt}</small>}<p>{item.note}</p></div>
-      </article>)}
-    </div>
+    <section className="glossary-browser" aria-labelledby="glossary-browser-title">
+      <header>
+        <div><small>LEARNING INDEX</small><h3 id="glossary-browser-title">術語學習索引</h3><p>影片出現的專有名詞會自動同步至此；利用搜尋、分類與下拉說明逐步複習。</p></div>
+        <div className="glossary-count"><strong>{filteredTerms.length}</strong><span>／{glossaryTerms.length}<br />目前顯示</span></div>
+      </header>
+
+      <div className="glossary-controls">
+        <label><span>搜尋術語</span><input value={query} onChange={event => setQuery(event.target.value)} placeholder="輸入 FTD、aphasia、失語症…" /></label>
+        <div className="glossary-filter" aria-label="術語分類">
+          {categories.map(item => <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>)}
+        </div>
+        <div className="glossary-actions">
+          <button onClick={() => setExpanded(filteredTerms.map(item => item.id))}>展開目前項目</button>
+          <button onClick={() => setExpanded([])}>全部收合</button>
+        </div>
+      </div>
+
+      <div className="term-accordion">
+        {filteredTerms.map((item, index) => <details key={item.id} open={expanded.includes(item.id)}>
+          <summary onClick={event => { event.preventDefault(); toggleTerm(item.id); }}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <div><h4>{item.term}</h4>{item.abbr && <b>{item.abbr}</b>}<p>{item.zh}</p></div>
+            <small>{item.category}</small><i aria-hidden="true">＋</i>
+          </summary>
+          <div className="term-detail">
+            <section><small>清楚定義</small><p>{item.definition}</p>{item.alt && <em>{item.alt}</em>}</section>
+            <aside><small>來源追蹤</small>{item.videoIds?.length ? <div>{item.videoIds.map(id => <a key={id} href={videoSources[id].url} target="_blank" rel="noreferrer">{videoSources[id].label}<span>↗</span></a>)}</div> : <p>基礎術語整理</p>}</aside>
+          </div>
+        </details>)}
+        {!filteredTerms.length && <div className="term-empty"><b>找不到相符術語</b><p>請改用英文縮寫、中文名稱或切換為「全部」。</p></div>}
+      </div>
+    </section>
 
     <div className="term-map" aria-label="術語層級關係">
       <div><span>現象描述</span><b>cognitive decline</b><small>是否下降？</small></div>
