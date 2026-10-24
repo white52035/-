@@ -29,31 +29,31 @@ const activities = [
 const researchLinks = [
   {
     id: "Q1",
-    source: "Q1.png",
+    sources: ["Q1.png"],
     gap: "尚缺阿美語正常老化、語言使用減少與神經認知疾病三者的錯誤類型比較。",
     next: "以命名、提示效果、語意替代、資訊密度及篇章連貫建立縱向語料指標。",
   },
   {
     id: "Q2",
-    source: "Q2.png",
+    sources: ["Q2.png"],
     gap: "尚缺經多重篩選的高齡阿美語參照組；僅用家屬主觀判斷可能污染常模。",
     next: "同步記錄 CDR、IADL／FAQ、情緒、聽力、醫療史、語言生命史與知情者資料。",
   },
   {
     id: "Q3",
-    source: "Q3_1.png、Q3_2.png",
+    sources: ["Q3_1.png", "Q3_2.png"],
     gap: "既有認知工具的切點未必適用低教育、雙語或以阿美語為優勢語言的長者。",
     next: "採多階段篩選，並建立年齡、教育、方言、雙語使用及部落背景的分層基線。",
   },
   {
     id: "Q4",
-    source: "Q4_1.png、Q4_2.png",
+    sources: ["Q4_1.png", "Q4_2.png"],
     gap: "語言風險訊號到偏鄉醫療轉介之間，仍缺少文化安全且可執行的閉環流程。",
     next: "共同設計複核、衛生所／遠距轉介、社區支持與 6–12 個月結果回饋流程。",
   },
   {
     id: "Q5",
-    source: "Q5_1.png、Q5_2.png",
+    sources: ["Q5_1.png", "Q5_2.png"],
     gap: "母語文化活動具健康促進潛力，但阿美族情境下的成效指標與因果證據仍不足。",
     next: "以普及型活動追蹤參與、情緒、社會連結、敘事表現及個人縱向變化，避免疾病標籤化。",
   },
@@ -62,7 +62,11 @@ const researchLinks = [
 function ResearchGap({ id }: { id: string }) {
   const item = researchLinks.find(link => link.id === id)!;
   return <section className="qa-research-link" aria-label={`${id} 阿美族研究關聯`}>
-    <div className="qa-source"><span>課程圖片依據</span><b>{item.source}</b></div>
+    <div className="qa-source"><span>課程圖片依據</span><nav aria-label={`${id} 課程來源圖片`}>
+      {item.sources.map(file => <a key={file} href={`course-sources/${file}`} target="_blank" rel="noreferrer" title={`開啟完整來源圖 ${file}`}>
+        <b>{file}</b><i aria-hidden="true">↗</i>
+      </a>)}
+    </nav></div>
     <div><small>AMIS RESEARCH GAP</small><h4>阿美族研究缺口</h4><p>{item.gap}</p></div>
     <div><small>NEXT DATA</small><h4>建議持續蒐集</h4><p>{item.next}</p></div>
   </section>;
