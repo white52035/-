@@ -17,9 +17,18 @@ const questions = [
 ];
 
 const updates = [
+  { date: "2026.10.24", title: "Q&A 圖片證據與研究缺口串接", detail: "逐張核對 Q1–Q5 共八張課程圖片，新增阿美族研究缺口、建議資料欄位與來源追蹤。" },
   { date: "2026.10.24", title: "影片—術語同步架構", detail: "新增相關影片資料夾，並將 FTD、aphasia、PPA、bvFTD 等詞彙同步至補充說明。" },
   { date: "2026.10.24", title: "術語學習 UX", detail: "補充說明新增搜尋、分類篩選、下拉定義與影片來源追蹤。" },
   { date: "2026.10.01", title: "ASHA 十區深入分析", detail: "完成 Dementia Practice Portal 十個區塊的臨床判讀與阿美族研究轉譯。" },
+];
+
+const qaGaps = [
+  ["Q1", "語言變化的質與量", "建立阿美語正常老化、語言減少與病理退化的錯誤類型比較。"],
+  ["Q2", "健康參照組污染", "驗證家屬無感、認知儲備及亞臨床狀態對阿美語常模的影響。"],
+  ["Q3", "文化公平篩選", "檢驗現行量表切點在低教育、雙語與阿美語優勢長者中的適切性。"],
+  ["Q4", "偏鄉轉介閉環", "建立語言訊號、在地複核、醫療轉介與臨床結果回饋流程。"],
+  ["Q5", "母語活動成效", "評估阿美語文化活動對社會連結、敘事表現與認知健康的縱向效益。"],
 ];
 
 export default function AmisResearchHub({ onNavigate }: Props) {
@@ -51,6 +60,11 @@ export default function AmisResearchHub({ onNavigate }: Props) {
         <ul>{folder.items.map(item => <li key={item}>{item}</li>)}</ul>
         <button onClick={() => onNavigate(folder.tab)}>開啟資料夾</button>
       </article>)}</div>
+    </section>
+
+    <section className="amis-gap-board">
+      <header><div><small>Q&amp;A → RESEARCH GAPS</small><h3>課程問題衍生的研究缺口</h3></div><button onClick={() => onNavigate("qa")}>查看完整 Q&amp;A</button></header>
+      <div>{qaGaps.map(gap => <article key={gap[0]}><span>{gap[0]}</span><section><h4>{gap[1]}</h4><p>{gap[2]}</p></section></article>)}</div>
     </section>
 
     <section className="amis-update-log">

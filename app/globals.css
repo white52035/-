@@ -383,6 +383,13 @@ body {
 .qa-safety { display:flex; gap:24px; align-items:flex-start; margin-top:40px; padding:24px 28px; background:var(--ink); color:white; }
 .qa-safety b { flex:none; color:#f0a081; font-size:12px; letter-spacing:.12em; }
 .qa-safety p { margin:0; color:#d2ddd8; line-height:1.7; }
+.qa-research-link { display:grid; grid-template-columns:150px 1fr 1fr; gap:1px; margin-top:24px; border:1px solid var(--line); background:var(--line); }
+.qa-research-link > div { padding:21px 22px; background:#f5f1e7; }
+.qa-research-link .qa-source { display:flex; flex-direction:column; justify-content:center; background:var(--ink); color:white; }
+.qa-source span,.qa-research-link small { color:var(--orange); font-size:10px; font-weight:800; letter-spacing:.12em; }
+.qa-source b { margin-top:8px; font:16px/1.4 Georgia,serif; }
+.qa-research-link h4 { margin:6px 0 8px; font:700 17px/1.3 Georgia,"Noto Serif TC",serif; }
+.qa-research-link p { margin:0; color:#50635b; font-size:13px; line-height:1.7; }
 .glossary-view { padding:80px 7vw 100px; max-width:1500px; margin:0 auto; min-height:800px; }
 .glossary-hero { display:grid; grid-template-columns:1fr minmax(320px,540px); gap:7vw; align-items:end; margin-bottom:52px; }
 .glossary-hero h2 { margin:14px 0 0; font:700 clamp(52px,7vw,96px)/.95 Georgia,"Noto Serif TC",serif; letter-spacing:-.04em; }
@@ -619,6 +626,18 @@ body {
 .amis-next-note { display:flex; gap:25px; margin-top:24px; padding:22px 26px; border-left:3px solid var(--orange); background:var(--ink); color:white; }
 .amis-next-note b { flex:none; color:#f0a181; font-size:11px; letter-spacing:.1em; }
 .amis-next-note p { margin:0; color:#c7d2cd; line-height:1.7; }
+.amis-gap-board { margin-top:55px; border:1px solid var(--line); }
+.amis-gap-board > header { display:flex; justify-content:space-between; gap:24px; align-items:end; padding:27px 30px; background:var(--ink); color:white; }
+.amis-gap-board > header small { color:#f0a181; font-size:10px; font-weight:800; letter-spacing:.14em; }
+.amis-gap-board > header h3 { margin:7px 0 0; font:700 28px/1.2 Georgia,"Noto Serif TC",serif; }
+.amis-gap-board > header button { min-height:42px; padding:0 18px; border:1px solid #ffffff66; background:transparent; color:white; cursor:pointer; }
+.amis-gap-board > header button:hover,.amis-gap-board > header button:focus-visible { border-color:var(--orange); color:#f0a181; outline:none; }
+.amis-gap-board > div { display:grid; grid-template-columns:repeat(5,1fr); }
+.amis-gap-board article { min-width:0; padding:23px 20px; border-right:1px solid var(--line); background:var(--cream); }
+.amis-gap-board article:last-child { border-right:0; }
+.amis-gap-board article > span { color:var(--orange); font:20px Georgia,serif; }
+.amis-gap-board h4 { margin:17px 0 8px; font:700 17px/1.35 Georgia,"Noto Serif TC",serif; }
+.amis-gap-board p { margin:0; color:#53665e; font-size:13px; line-height:1.65; }
 .videos-view { padding:80px 7vw 100px; max-width:1500px; margin:0 auto; min-height:800px; }
 .videos-hero { display:grid; grid-template-columns:1fr minmax(320px,560px); gap:7vw; align-items:end; margin-bottom:42px; }
 .videos-hero h2 { margin:14px 0 0; font:700 clamp(52px,7vw,96px)/.95 Georgia,"Noto Serif TC",serif; letter-spacing:-.04em; }
@@ -1092,6 +1111,7 @@ footer p {
   .qa-tr > *:last-child { border-bottom:0; }
   .qa-th { display:none; }
   .qa-points,.screening-grid { grid-template-columns:1fr; }
+  .qa-research-link { grid-template-columns:1fr; }
   .activity-table { grid-template-columns:1fr; }
   .activity-table > div { border-right:0; border-bottom:1px solid var(--line); }
   .activity-table > div:last-child { border-bottom:0; }
@@ -1169,6 +1189,9 @@ footer p {
   .amis-update-log { grid-template-columns:1fr; gap:20px; padding:25px 22px; }
   .amis-update-log article { grid-template-columns:90px 1fr; }
   .amis-next-note { flex-direction:column; gap:8px; }
+  .amis-gap-board > header { align-items:flex-start; flex-direction:column; }
+  .amis-gap-board > div { grid-template-columns:1fr; }
+  .amis-gap-board article { border-right:0; border-bottom:1px solid var(--line); }
   .videos-view { padding:60px 22px 100px; }
   .videos-hero { grid-template-columns:1fr; gap:25px; }
   .video-folder-bar { align-items:flex-start; flex-direction:column; }

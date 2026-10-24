@@ -26,6 +26,48 @@ const activities = [
   ["傳統工藝與敘事", "邊操作編織、料理或農事步驟，邊說明程序與經驗。", "執行功能、程序記憶、動作協調"],
 ];
 
+const researchLinks = [
+  {
+    id: "Q1",
+    source: "Q1.png",
+    gap: "尚缺阿美語正常老化、語言使用減少與神經認知疾病三者的錯誤類型比較。",
+    next: "以命名、提示效果、語意替代、資訊密度及篇章連貫建立縱向語料指標。",
+  },
+  {
+    id: "Q2",
+    source: "Q2.png",
+    gap: "尚缺經多重篩選的高齡阿美語參照組；僅用家屬主觀判斷可能污染常模。",
+    next: "同步記錄 CDR、IADL／FAQ、情緒、聽力、醫療史、語言生命史與知情者資料。",
+  },
+  {
+    id: "Q3",
+    source: "Q3_1.png、Q3_2.png",
+    gap: "既有認知工具的切點未必適用低教育、雙語或以阿美語為優勢語言的長者。",
+    next: "採多階段篩選，並建立年齡、教育、方言、雙語使用及部落背景的分層基線。",
+  },
+  {
+    id: "Q4",
+    source: "Q4_1.png、Q4_2.png",
+    gap: "語言風險訊號到偏鄉醫療轉介之間，仍缺少文化安全且可執行的閉環流程。",
+    next: "共同設計複核、衛生所／遠距轉介、社區支持與 6–12 個月結果回饋流程。",
+  },
+  {
+    id: "Q5",
+    source: "Q5_1.png、Q5_2.png",
+    gap: "母語文化活動具健康促進潛力，但阿美族情境下的成效指標與因果證據仍不足。",
+    next: "以普及型活動追蹤參與、情緒、社會連結、敘事表現及個人縱向變化，避免疾病標籤化。",
+  },
+];
+
+function ResearchGap({ id }: { id: string }) {
+  const item = researchLinks.find(link => link.id === id)!;
+  return <section className="qa-research-link" aria-label={`${id} 阿美族研究關聯`}>
+    <div className="qa-source"><span>課程圖片依據</span><b>{item.source}</b></div>
+    <div><small>AMIS RESEARCH GAP</small><h4>阿美族研究缺口</h4><p>{item.gap}</p></div>
+    <div><small>NEXT DATA</small><h4>建議持續蒐集</h4><p>{item.next}</p></div>
+  </section>;
+}
+
 export default function QAColumn() {
   return <section className="qa-view">
     <header className="qa-hero">
@@ -42,6 +84,7 @@ export default function QAColumn() {
           {comparison.map((r)=><div className="qa-tr" role="row" key={r[0]}><b>{r[0]}</b><span>{r[1]}</span><span>{r[2]}</span></div>)}
         </div>
         <aside><b>判讀重點</b>要看錯誤類型、提示效果、功能影響與個人縱向變化，而不只是停頓或錯誤出現幾次。N400、語料指標或影像等研究工具可補充機制證據，但不能單獨完成臨床診斷。</aside>
+        <ResearchGap id="Q1" />
       </div>
     </article>
 
@@ -50,6 +93,7 @@ export default function QAColumn() {
       <div className="qa-body"><h3>家人沒有感覺明顯變化，就能當作同齡「無失智常模」嗎？</h3>
         <p className="qa-answer"><b>不能直接當作常模。</b>「家屬無感」只是初步招募線索。固定、情境化的日常對話可能掩蓋高負荷任務中的困難；家屬也可能逐漸適應變化。MCI、前臨床病理、認知儲備與代償都可能使外觀看似正常。</p>
         <div className="qa-points"><div><b>可能造成的偏差</b><p>把未辨識的認知下降納入健康組，會拉低參照分布，降低早期篩檢敏感度。</p></div><div><b>正確定位</b><p>家屬觀察應和客觀認知、功能、情緒、醫療史、聽視力與語言背景共同判讀。</p></div><div><b>常模不是診斷</b><p>即使多重篩選通過，也只能稱為「研究定義下的認知未受損組」，不能保證不存在所有前臨床病理。</p></div></div>
+        <ResearchGap id="Q2" />
       </div>
     </article>
 
@@ -59,6 +103,7 @@ export default function QAColumn() {
         <p className="qa-answer">採用<b>多階段篩選與縱向確認</b>，並在研究計畫中預先定義納入、排除與轉介規則。任何單一量表都不足以證明真正「無失智」。</p>
         <div className="screening-grid">{screening.map((s)=><div key={s[0]}><span>{s[0]}</span><h4>{s[1]}</h4><p>{s[2]}</p></div>)}</div>
         <aside><b>偏鄉可行方案</b>若缺少完整生物標記，可採同儕分層比較、個人縱向追蹤及在地知情者資料，並清楚標示證據層級。生物標記只適用於有資源、倫理與臨床支持的研究，不是一般語料招募的必要條件。</aside>
+        <ResearchGap id="Q3" />
       </div>
     </article>
 
@@ -67,6 +112,7 @@ export default function QAColumn() {
       <div className="qa-body"><h3>語言偵測出偏鄉長者可能有失智風險後，下一步怎麼做？</h3>
         <p className="qa-answer">語言分析只能發出<b>風險訊號</b>，下一步應是複核、專業轉介與支持，而不是直接貼上診斷標籤。</p>
         <ol className="care-path">{pathway.map((p,i)=><li key={p[0]}><span>{String(i+1).padStart(2,"0")}</span><div><h4>{p[0]}</h4><p>{p[1]}</p></div></li>)}</ol>
+        <ResearchGap id="Q4" />
       </div>
     </article>
 
@@ -76,6 +122,7 @@ export default function QAColumn() {
         <p className="qa-answer"><b>是，可以作為全民／普及型健康促進。</b>以文化傳承、社交與生活樂趣為核心，比「失智訓練」更去標籤，也可能支持社會參與、情緒與認知儲備。不過「延緩失智」的效果大小仍需依活動設計與研究證據謹慎表述。</p>
         <div className="activity-table">{activities.map((a)=><div key={a[0]}><h4>{a[0]}</h4><p>{a[1]}</p><small>{a[2]}</small></div>)}</div>
         <aside><b>生態觀察的倫理界線</b>社區活動可以協助看見長期變化，但工作人員應接受觀察與轉介訓練；紀錄、分享或研究使用語言資料前，必須取得知情同意並避免公開貼標籤。</aside>
+        <ResearchGap id="Q5" />
       </div>
     </article>
 
