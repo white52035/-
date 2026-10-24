@@ -27,6 +27,15 @@ type ReferenceItem = {
   doi: string;
 };
 type ThesisReference = { title: string; url: string; topic: string };
+type ForeignReference = {
+  year: number;
+  citation: React.ReactNode;
+  searchText: string;
+  topic: string;
+  summary: string;
+  doi: string;
+  files: { label: string; url: string; note?: string }[];
+};
 const raw = [
   [
     1,
@@ -377,6 +386,30 @@ const references: ReferenceItem[] = [
   [21,"Part II","Isaac, K. M.","Managing linguistic diversity in the clinic: Interpreters in speech-language pathology","口譯協作、跨文化溝通、臨床治理","10.1002/9780470754856.ch21"],
 ].map(([chapter,part,authors,title,focus,doi])=>({chapter,part,authors,title,focus,doi})) as ReferenceItem[];
 
+const foreignReferences: ForeignReference[] = [
+  {
+    year: 2022,
+    citation: <>Karpathiou, N., &amp; Kambanaros, M. (2022). Comparing individuals with PPA to individuals with AD: Cognitive and linguistic profiles. <i>Frontiers in Communication, 7</i>, Article 893471.</>,
+    searchText: "Karpathiou Kambanaros PPA AD cognitive linguistic profiles primary progressive aphasia Alzheimer",
+    topic: "PPA、AD與語言—認知輪廓",
+    summary: "以10名PPA、9名AD及15名神經典型成人比較認知、語言與連貫話語；自然敘事、句子重複與語音錯誤提供跨測驗的候選鑑別線索。",
+    doi: "10.3389/fcomm.2022.893471",
+    files: [{ label: "原始論文 PDF", url: "literature/karpathiou-kambanaros-2022-ppa-ad.pdf" }],
+  },
+  {
+    year: 2008,
+    citation: <>Bier, N., Van der Linden, M., Gagnon, L., Desrosiers, J., Adam, S., Louveaux, S., &amp; Saint-Mleux, J. (2008). Face-name association learning in early Alzheimer’s disease: A comparison of learning methods and their underlying mechanisms. <i>Neuropsychological Rehabilitation, 18</i>(3), 343–371.</>,
+    searchText: "Bier Van der Linden face name association early Alzheimer learning spaced retrieval vanishing cues errorless implicit memory",
+    topic: "早期AD的臉孔—姓名聯想學習",
+    summary: "比較15名早期AD患者與15名配對控制者使用間隔提取、消失線索、無錯學習及兩種試誤法的表現；五種方法皆能支持學習，但方法間未見顯著優勢。",
+    doi: "10.1080/09602010701694723",
+    files: [
+      { label: "英文原始論文 PDF", url: "literature/bier-et-al-2008-face-name-learning.pdf" },
+      { label: "中文整理 PDF", url: "literature/bier-et-al-2008-face-name-learning-zh.pdf", note: "機器翻譯，請與英文原文對照" },
+    ],
+  },
+];
+
 // Researcher-supplied order: newest to oldest. Keep NDLTD Handle links canonical.
 const thesisReferences: ThesisReference[] = [
   ["以生成式人工智慧建立稀少性語言之影片生成系統","https://hdl.handle.net/11296/d42g2a","生成式AI與低資源語言"],
@@ -423,7 +456,7 @@ export default function Home() {
     [aiChapter, setAiChapter] = useState(1),
     [refQuery, setRefQuery] = useState(""),
     [refPart, setRefPart] = useState("全部"),
-    [refCollection, setRefCollection] = useState<"chapters" | "theses">("theses"),
+    [refCollection, setRefCollection] = useState<"chapters" | "theses" | "foreign">("theses"),
     [thesisOrder, setThesisOrder] = useState<"newest" | "oldest">("newest"),
     [briefOpen, setBriefOpen] = useState(true),
     [briefCopied, setBriefCopied] = useState(false),
@@ -456,6 +489,9 @@ export default function Home() {
     );
     return thesisOrder === "newest" ? matches : [...matches].reverse();
   }, [refQuery, thesisOrder]);
+  const filteredForeign = useMemo(() => foreignReferences.filter((r) =>
+    `${r.searchText}${r.topic}${r.summary}${r.doi}`.toLowerCase().includes(refQuery.toLowerCase())
+  ), [refQuery]);
   const toggle = (n: number) => {
     const next = read.includes(n) ? read.filter((x) => x !== n) : [...read, n];
     setRead(next);
@@ -778,16 +814,17 @@ export default function Home() {
               <h2>文獻參考</h2>
               <p>整合《臨床社會語言學》章節原典與臺灣博碩士論文，保留研究焦點及可查證的永久連結。</p>
             </div>
-            <div className="reference-count"><strong>{refCollection === "theses" ? filteredTheses.length : filteredReferences.length}</strong><span>／{refCollection === "theses" ? "34篇論文" : "21章文獻"}</span></div>
+            <div className="reference-count"><strong>{refCollection === "theses" ? filteredTheses.length : refCollection === "foreign" ? filteredForeign.length : filteredReferences.length}</strong><span>／{refCollection === "theses" ? "34篇論文" : refCollection === "foreign" ? "2篇國外文獻" : "21章文獻"}</span></div>
           </div>
           <PPAArticleAnalysis />
           <div className="reference-collections" role="tablist" aria-label="文獻來源">
             <button className={refCollection === "theses" ? "active" : ""} onClick={() => setRefCollection("theses")}>臺灣博碩士論文知識加值系統 <b>34</b></button>
+            <button className={refCollection === "foreign" ? "active" : ""} onClick={() => setRefCollection("foreign")}>國外文獻 <b>{foreignReferences.length}</b></button>
             <button className={refCollection === "chapters" ? "active" : ""} onClick={() => setRefCollection("chapters")}>書籍章節原典 <b>21</b></button>
           </div>
           <div className="reference-tools">
             <label className="reference-search"><span>⌕</span><input value={refQuery} onChange={(e)=>setRefQuery(e.target.value)} placeholder="搜尋題名、研究主題或永久識別碼" /></label>
-            {refCollection === "chapters" ? <div className="reference-parts">{["全部","Part I","Part II"].map((p)=><button key={p} className={refPart===p?"active":""} onClick={()=>setRefPart(p)}>{p}</button>)}</div> : <button className="thesis-order" onClick={() => setThesisOrder(thesisOrder === "newest" ? "oldest" : "newest")} aria-label={`切換為${thesisOrder === "newest" ? "舊到新" : "新到舊"}排列`} title="切換排列順序"><span aria-hidden="true">⇅</span><b>{thesisOrder === "newest" ? "新 → 舊" : "舊 → 新"}</b></button>}
+            {refCollection === "chapters" ? <div className="reference-parts">{["全部","Part I","Part II"].map((p)=><button key={p} className={refPart===p?"active":""} onClick={()=>setRefPart(p)}>{p}</button>)}</div> : refCollection === "theses" ? <button className="thesis-order" onClick={() => setThesisOrder(thesisOrder === "newest" ? "oldest" : "newest")} aria-label={`切換為${thesisOrder === "newest" ? "舊到新" : "新到舊"}排列`} title="切換排列順序"><span aria-hidden="true">⇅</span><b>{thesisOrder === "newest" ? "新 → 舊" : "舊 → 新"}</b></button> : <span className="reference-format">APA 7 · 新至舊</span>}
           </div>
           {refCollection === "chapters" ? <div className="reference-list">
             {filteredReferences.map((r)=><article key={r.chapter}>
@@ -796,6 +833,16 @@ export default function Home() {
                 <div className="reference-meta"><span>{r.part}</span><small>{r.focus}</small></div>
                 <p>{r.authors} (2005). {r.title}. In M. J. Ball (Ed.), <i>Clinical sociolinguistics</i>. Blackwell Publishing.</p>
                 <a href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer"><span>DOI</span>{r.doi}<b>↗</b></a>
+              </div>
+            </article>)}
+          </div> : refCollection === "foreign" ? <div className="reference-list foreign-list">
+            {filteredForeign.map((r, index)=><article key={r.doi}>
+              <div className="reference-number"><span>YEAR</span><b>{r.year}</b></div>
+              <div className="reference-entry">
+                <div className="reference-meta"><span>國外期刊</span><small>{r.topic}</small></div>
+                <p>{r.citation} <a className="inline-doi" href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer">https://doi.org/{r.doi}</a></p>
+                <div className="foreign-summary"><b>研究重點</b><span>{r.summary}</span></div>
+                <div className="reference-links"><a href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer"><span>DOI</span>期刊來源<b>↗</b></a>{r.files.map(file => <a key={file.url} href={file.url} target="_blank" rel="noreferrer" title={file.note}><span>PDF</span>{file.label}<b>↗</b>{file.note && <small>{file.note}</small>}</a>)}</div>
               </div>
             </article>)}
           </div> : <div className="reference-list thesis-list">
@@ -808,7 +855,7 @@ export default function Home() {
               </div>
             </article>)}
           </div>}
-          <div className="reference-provenance"><b>來源與排序</b><p>{refCollection === "theses" ? "本清單收錄指定的34筆「臺灣博碩士論文知識加值系統」文獻，依研究者提供之新至舊順序呈現；每筆均連至國家圖書館Handle永久識別網址。國圖目錄可能要求驗證碼，本站不臆補未能可靠核對的年份或作者。" : "章名與作者依指定Google文件整理；DOI已逐章以Crossref書目資料核對。此區列出各章原典，不將閱讀心得中的未完整書目人名或案例自行擴充為正式引用。"}</p>{refCollection === "chapters" && <a href="https://docs.google.com/document/d/1J7xyJ0r_9L6q6xOnYD_RA8o9kN33zXWJYVBv7zsjHWQ/edit" target="_blank" rel="noreferrer">開啟原始整理文件 ↗</a>}</div>
+          <div className="reference-provenance"><b>來源與排序</b><p>{refCollection === "theses" ? "本清單收錄指定的34筆「臺灣博碩士論文知識加值系統」文獻，依研究者提供之新至舊順序呈現；每筆均連至國家圖書館Handle永久識別網址。國圖目錄可能要求驗證碼，本站不臆補未能可靠核對的年份或作者。" : refCollection === "foreign" ? "國外文獻依出版年份新至舊排列；作者、期刊、卷期、頁碼與 DOI 以原始論文及 Crossref 書目資料核對。中文整理檔為機器翻譯輔助材料，引用與判讀均應以英文原文為準。" : "章名與作者依指定Google文件整理；DOI已逐章以Crossref書目資料核對。此區列出各章原典，不將閱讀心得中的未完整書目人名或案例自行擴充為正式引用。"}</p>{refCollection === "chapters" && <a href="https://docs.google.com/document/d/1J7xyJ0r_9L6q6xOnYD_RA8o9kN33zXWJYVBv7zsjHWQ/edit" target="_blank" rel="noreferrer">開啟原始整理文件 ↗</a>}</div>
         </section>
       )}
       {tab === "plan" && (

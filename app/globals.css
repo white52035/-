@@ -789,7 +789,7 @@ body {
 .reference-count strong { color:var(--orange); font:44px Georgia; }
 .reference-count span { color:#718078; font-size:12px; }
 .reference-tools { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:18px 22px; background:var(--ink); }
-.reference-collections { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border:1px solid var(--line); border-bottom:0; }
+.reference-collections { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border:1px solid var(--line); border-bottom:0; }
 .reference-collections button { border:0; border-right:1px solid var(--line); background:#e7e5da; color:var(--ink); padding:16px 20px; cursor:pointer; text-align:left; font-weight:700; }
 .reference-collections button:last-child { border-right:0; }
 .reference-collections button.active { background:var(--orange); color:white; }
@@ -820,6 +820,16 @@ body {
 .reference-entry a span { background:var(--orange); color:white; padding:3px 5px; font-size:8px; }
 .reference-entry a b { color:var(--orange); }
 .thesis-list .reference-entry p { font-family:Georgia,"Noto Serif TC",serif; font-weight:600; }
+.reference-format { align-self:center; color:#687971; font-size:11px; font-weight:800; letter-spacing:.1em; }
+.foreign-list .reference-number b { font-size:20px; }
+.foreign-list .reference-entry > p { max-width:1050px; }
+.reference-entry .inline-doi { display:inline; border:0; padding:0; color:var(--orange); font-size:inherit; overflow-wrap:anywhere; }
+.foreign-summary { display:grid; grid-template-columns:90px 1fr; gap:16px; margin:16px 0 19px; padding:17px 19px; background:#eee9dc; }
+.foreign-summary b { color:var(--orange); font-size:10px; letter-spacing:.1em; }
+.foreign-summary span { color:#4d625a; font-size:13px; line-height:1.7; }
+.reference-links { display:flex; flex-wrap:wrap; gap:11px 18px; align-items:center; }
+.reference-links a { position:relative; }
+.reference-links a small { margin-left:5px; color:#7a746d; font-size:9px; }
 .thesis-list .reference-number b { font-size:24px; }
 .reference-provenance { margin-top:25px; padding:25px 30px; background:#eee9dc; border-left:3px solid var(--orange); }
 .reference-provenance b { font-size:12px; letter-spacing:.12em; color:var(--orange); }
