@@ -718,6 +718,15 @@ body {
 .video-source-note b { flex:none; color:var(--orange); font-size:11px; letter-spacing:.12em; }
 .video-source-note p { margin:0; color:#4d625a; line-height:1.7; }
 .references-head { display:flex; justify-content:space-between; align-items:end; gap:40px; margin-bottom:35px; }
+.foreign-guide { display:grid; grid-template-columns:minmax(260px,.75fr) 1.5fr; gap:42px; margin:22px 0 26px; padding:28px 32px; border-left:5px solid var(--orange); background:var(--ink); color:white; }
+.foreign-guide small { color:#f0a181; font-size:10px; font-weight:800; letter-spacing:.15em; }
+.foreign-guide h3 { margin:8px 0 10px; font:700 26px/1.2 Georgia,"Noto Serif TC",serif; }
+.foreign-guide > div p { margin:0; color:#c8d3ce; font-size:13px; line-height:1.7; }
+.foreign-guide ol { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin:0; padding:0; list-style:none; background:#ffffff29; }
+.foreign-guide li { display:grid; grid-template-columns:30px 1fr; gap:12px; padding:18px; background:#20342c; }
+.foreign-guide li > span { color:#f0a181; font:15px Georgia,serif; }
+.foreign-guide li b { font-size:14px; }
+.foreign-guide li p { margin:7px 0 0; color:#c8d3ce; font-size:12px; line-height:1.6; }
 .paper-analysis { margin:45px 0 70px; border:1px solid var(--line); background:var(--cream); }
 .paper-head { display:grid; grid-template-columns:1fr auto; gap:35px; align-items:end; padding:34px 38px; background:var(--ink); color:white; }
 .paper-head > div > span { color:#f0a181; font-size:10px; letter-spacing:.16em; }
@@ -1269,6 +1278,8 @@ footer p {
   .research-timeline article:before { top:25px; left:-6px; }
   .amis-translation { grid-template-columns:1fr; margin:35px 22px 28px; }
   .reference-tools { align-items:stretch; flex-direction:column; }
+  .foreign-guide { grid-template-columns:1fr; gap:22px; padding:24px 20px; }
+  .foreign-guide ol { grid-template-columns:1fr; }
   .reference-list article { grid-template-columns:68px 1fr; }
   .reference-number { padding:20px 14px; }
   .reference-entry { padding:20px 18px; }

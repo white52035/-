@@ -824,12 +824,19 @@ export default function Home() {
             </div>
             <div className="reference-count"><strong>{refCollection === "theses" ? filteredTheses.length : refCollection === "foreign" ? filteredForeign.length : filteredReferences.length}</strong><span>／{refCollection === "theses" ? "34篇論文" : refCollection === "foreign" ? "2篇國外文獻" : "21章文獻"}</span></div>
           </div>
-          <PPAArticleAnalysis />
           <div className="reference-collections" role="tablist" aria-label="文獻來源">
             <button className={refCollection === "theses" ? "active" : ""} onClick={() => setRefCollection("theses")}>臺灣博碩士論文知識加值系統 <b>34</b></button>
             <button className={refCollection === "foreign" ? "active" : ""} onClick={() => setRefCollection("foreign")}>國外文獻 <b>{foreignReferences.length}</b></button>
             <button className={refCollection === "chapters" ? "active" : ""} onClick={() => setRefCollection("chapters")}>書籍章節原典 <b>21</b></button>
           </div>
+          {refCollection === "foreign" && <div className="foreign-guide" aria-label="國外文獻導讀">
+            <div><small>READING GUIDE</small><h3>兩條研究線，一個共同問題</h3><p>先比較兩篇研究的對象、任務與用途，再開啟 DOI 或原始 PDF；較長的 PPA／AD 深度拆解置於文獻清單後方。</p></div>
+            <ol>
+              <li><span>01</span><div><b>疾病鑑別線</b><p>2022｜比較 PPA、AD 與神經典型成人的認知、語言及敘事輪廓。</p></div></li>
+              <li><span>02</span><div><b>介入學習線</b><p>2008｜比較早期 AD 患者五種臉孔—姓名聯想學習方法。</p></div></li>
+              <li><span>03</span><div><b>阿美族研究連結</b><p>前者提示跨語言鑑別需建立在地基線；後者提供姓名、人物與文化記憶介入的設計參照。</p></div></li>
+            </ol>
+          </div>}
           <div className="reference-tools">
             <label className="reference-search"><span>⌕</span><input value={refQuery} onChange={(e)=>setRefQuery(e.target.value)} placeholder="搜尋題名、研究主題或永久識別碼" /></label>
             {refCollection === "chapters" ? <div className="reference-parts">{["全部","Part I","Part II"].map((p)=><button key={p} className={refPart===p?"active":""} onClick={()=>setRefPart(p)}>{p}</button>)}</div> : refCollection === "theses" ? <button className="thesis-order" onClick={() => setThesisOrder(thesisOrder === "newest" ? "oldest" : "newest")} aria-label={`切換為${thesisOrder === "newest" ? "舊到新" : "新到舊"}排列`} title="切換排列順序"><span aria-hidden="true">⇅</span><b>{thesisOrder === "newest" ? "新 → 舊" : "舊 → 新"}</b></button> : <span className="reference-format">APA 7 · 新至舊</span>}
@@ -863,6 +870,7 @@ export default function Home() {
               </div>
             </article>)}
           </div>}
+          {refCollection === "foreign" && <PPAArticleAnalysis />}
           <div className="reference-provenance"><b>來源與排序</b><p>{refCollection === "theses" ? "本清單收錄指定的34筆「臺灣博碩士論文知識加值系統」文獻，依研究者提供之新至舊順序呈現；每筆均連至國家圖書館Handle永久識別網址。國圖目錄可能要求驗證碼，本站不臆補未能可靠核對的年份或作者。" : refCollection === "foreign" ? "國外文獻依出版年份新至舊排列；作者、期刊、卷期、頁碼與 DOI 以原始論文及 Crossref 書目資料核對。中文整理檔為機器翻譯輔助材料，引用與判讀均應以英文原文為準。" : "章名與作者依指定Google文件整理；DOI已逐章以Crossref書目資料核對。此區列出各章原典，不將閱讀心得中的未完整書目人名或案例自行擴充為正式引用。"}</p>{refCollection === "chapters" && <a href="https://docs.google.com/document/d/1J7xyJ0r_9L6q6xOnYD_RA8o9kN33zXWJYVBv7zsjHWQ/edit" target="_blank" rel="noreferrer">開啟原始整理文件 ↗</a>}</div>
         </section>
       )}
