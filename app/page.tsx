@@ -6,6 +6,7 @@ import Glossary from "./Glossary";
 import PPAArticleAnalysis from "./PPAArticleAnalysis";
 import RelatedSites from "./RelatedSites";
 import RelatedVideos from "./RelatedVideos";
+import AmisResearchHub from "./AmisResearchHub";
 
 type Chapter = {
   n: number;
@@ -479,6 +480,7 @@ export default function Home() {
           {[
             ["chapters", "章節閱讀"],
             ["research", "研究地圖"],
+            ["amis", "阿美族研究核心"],
             ["ai", "人工智慧"],
             ["references", "文獻參考"],
             ["qa", "Q&A專欄"],
@@ -862,6 +864,7 @@ export default function Home() {
       {tab === "glossary" && <Glossary />}
       {tab === "sites" && <RelatedSites />}
       {tab === "videos" && <RelatedVideos />}
+      {tab === "amis" && <AmisResearchHub onNavigate={setTab} />}
       <footer>
         <div>
           <b>Clinical Sociolinguistics</b>
