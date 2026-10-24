@@ -59,14 +59,30 @@ const videos: Video[] = [
 export default function RelatedVideos() {
   return <section className="videos-view">
     <header className="videos-hero">
-      <div><div className="section-kicker">VIDEO RESEARCH FOLDER · {videos.length.toString().padStart(2, "0")}</div><h2>相關影片</h2></div>
+      <div><div className="section-kicker">VIDEO RESEARCH FOLDER · 01 CHANNEL + {videos.length.toString().padStart(2, "0")} VIDEOS</div><h2>相關影片</h2></div>
       <p>把影片當作學術導讀入口：先掌握核心主張，再核對醫療術語、縮寫與臨床限制。後續新增影片時，可沿用同一套整理架構。</p>
     </header>
 
     <div className="video-folder-bar">
-      <div><span aria-hidden="true">▶</span><b>FTD、失語症與語言變化</b></div>
-      <p><strong>{videos.length}</strong> 部影片 · 核心重點 · 術語辭典 · 阿美族研究連結</p>
+      <div><span aria-hidden="true">▶</span><b>腦醫學、FTD、失語症與語言變化</b></div>
+      <p><strong>1</strong> 個頻道 · <strong>{videos.length}</strong> 部影片 · 核心重點 · 術語辭典 · 阿美族研究連結</p>
     </div>
+
+    <article className="channel-resource">
+      <div className="channel-mark" aria-hidden="true"><span>PN</span><small>BRAIN<br/>MEDICINE</small></div>
+      <div className="channel-content">
+        <small>YOUTUBE CHANNEL · 持續更新來源</small>
+        <h3>Dr. PN腦醫學</h3>
+        <p>介紹神經醫學的近期發展，內容特別聚焦大腦老化、神經退化疾病的預防與治療知識。可作為追蹤新議題與建立醫療術語問題清單的導讀入口。</p>
+        <div className="channel-topics"><span>大腦老化</span><span>神經退化</span><span>失智症</span><span>影像與生物標記</span><span>巴金森症</span></div>
+      </div>
+      <div className="channel-guide">
+        <b>近期內容脈絡</b>
+        <ul><li>類澱粉 PET 與 Centiloid 判讀</li><li>腦血管周圍間隙與清除系統</li><li>光遺傳學、失智與巴金森症</li></ul>
+        <a href="https://www.youtube.com/@PNbrainmedicine" target="_blank" rel="noreferrer">前往頻道 <span aria-hidden="true">↗</span></a>
+      </div>
+      <aside><b>連回阿美族研究</b><p>可用來建立「神經醫學新知候選清單」，再逐題查核原始研究，評估哪些生物標記、風險因子或介入概念能與阿美語自然語料、文化活動及偏鄉轉介流程形成可檢驗的跨領域假設。</p><small>頻道影片是導讀材料；涉及診斷、治療或風險數值時，仍須回到同儕審查論文、臨床指引與專業評估。</small></aside>
+    </article>
 
     <div className="video-library">
       {videos.map((video, index) => <article className="video-entry" key={video.id}>
