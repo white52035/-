@@ -722,7 +722,7 @@ body {
 .foreign-guide small { color:#f0a181; font-size:10px; font-weight:800; letter-spacing:.15em; }
 .foreign-guide h3 { margin:8px 0 10px; font:700 26px/1.2 Georgia,"Noto Serif TC",serif; }
 .foreign-guide > div p { margin:0; color:#c8d3ce; font-size:13px; line-height:1.7; }
-.foreign-guide ol { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin:0; padding:0; list-style:none; background:#ffffff29; }
+.foreign-guide ol { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; margin:0; padding:0; list-style:none; background:#ffffff29; }
 .foreign-guide li { display:grid; grid-template-columns:30px 1fr; gap:12px; padding:18px; background:#20342c; }
 .foreign-guide li > span { color:#f0a181; font:15px Georgia,serif; }
 .foreign-guide li b { font-size:14px; }

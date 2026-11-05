@@ -34,7 +34,7 @@ type ForeignReference = {
   topic: string;
   summary: string;
   doi: string;
-  files: { label: string; url: string; note?: string }[];
+  files: { label: string; url: string; note?: string; kind?: string }[];
 };
 const raw = [
   [
@@ -406,6 +406,18 @@ const foreignReferences: ForeignReference[] = [
     files: [
       { label: "英文原始論文 PDF", url: "literature/bier-et-al-2008-face-name-learning.pdf" },
       { label: "中文整理 PDF", url: "literature/bier-et-al-2008-face-name-learning-zh.pdf", note: "機器翻譯，請與英文原文對照" },
+    ],
+  },
+  {
+    year: 1999,
+    citation: <>Poole, S. C. (1999). <i>An introduction to linguistics</i>. Palgrave. </>,
+    searchText: "Poole Stuart introduction linguistics language lexis semantics phonetics phonology morphology syntax regional social variation historical writing systems",
+    topic: "語言學基礎與社會變異",
+    summary: "以12章建立語言學入門架構，涵蓋語言與詞彙、語意、語音、音韻、構詞、句法、區域及社會變異、歷史語言學與書寫系統；可作為解讀臨床語言表現前的基礎概念與術語地圖。",
+    doi: "10.1007/978-1-349-27346-1",
+    files: [
+      { label: "Springer 官方書目", url: "https://link.springer.com/book/10.1007/978-1-349-27346-1", kind: "BOOK" },
+      { label: "Bloomsbury 出版頁", url: "https://www.bloomsbury.com/uk/introduction-to-linguistics-9780333692189/", kind: "BOOK" },
     ],
   },
 ];
@@ -822,7 +834,7 @@ export default function Home() {
               <h2>文獻參考</h2>
               <p>整合國外期刊、《臨床社會語言學》章節原典與臺灣博碩士論文，保留研究焦點及可查證的 DOI／永久連結。</p>
             </div>
-            <div className="reference-count"><strong>{refCollection === "theses" ? filteredTheses.length : refCollection === "foreign" ? filteredForeign.length : filteredReferences.length}</strong><span>／{refCollection === "theses" ? "34篇論文" : refCollection === "foreign" ? "2篇國外文獻" : "21章文獻"}</span></div>
+            <div className="reference-count"><strong>{refCollection === "theses" ? filteredTheses.length : refCollection === "foreign" ? filteredForeign.length : filteredReferences.length}</strong><span>／{refCollection === "theses" ? "34篇論文" : refCollection === "foreign" ? `${foreignReferences.length}篇國外文獻` : "21章文獻"}</span></div>
           </div>
           <div className="reference-collections" role="tablist" aria-label="文獻來源">
             <button className={refCollection === "theses" ? "active" : ""} onClick={() => setRefCollection("theses")}>臺灣博碩士論文知識加值系統 <b>34</b></button>
@@ -830,11 +842,12 @@ export default function Home() {
             <button className={refCollection === "chapters" ? "active" : ""} onClick={() => setRefCollection("chapters")}>書籍章節原典 <b>21</b></button>
           </div>
           {refCollection === "foreign" && <div className="foreign-guide" aria-label="國外文獻導讀">
-            <div><small>READING GUIDE</small><h3>兩條研究線，一個共同問題</h3><p>先比較兩篇研究的對象、任務與用途，再開啟 DOI 或原始 PDF；較長的 PPA／AD 深度拆解置於文獻清單後方。</p></div>
+            <div><small>READING GUIDE</small><h3>三筆文獻，三層研究用途</h3><p>先從基礎語言學建立概念地圖，再比較疾病鑑別與介入學習研究；每筆均提供 DOI、出版者頁面或原始 PDF。</p></div>
             <ol>
-              <li><span>01</span><div><b>疾病鑑別線</b><p>2022｜比較 PPA、AD 與神經典型成人的認知、語言及敘事輪廓。</p></div></li>
-              <li><span>02</span><div><b>介入學習線</b><p>2008｜比較早期 AD 患者五種臉孔—姓名聯想學習方法。</p></div></li>
-              <li><span>03</span><div><b>阿美族研究連結</b><p>前者提示跨語言鑑別需建立在地基線；後者提供姓名、人物與文化記憶介入的設計參照。</p></div></li>
+              <li><span>01</span><div><b>基礎概念線</b><p>1999｜建立語言結構、社會變異、語言變遷與書寫系統的入門框架。</p></div></li>
+              <li><span>02</span><div><b>疾病鑑別線</b><p>2022｜比較 PPA、AD 與神經典型成人的認知、語言及敘事輪廓。</p></div></li>
+              <li><span>03</span><div><b>介入學習線</b><p>2008｜比較早期 AD 患者五種臉孔—姓名聯想學習方法。</p></div></li>
+              <li><span>04</span><div><b>阿美族研究連結</b><p>先界定語言層次與社會變異，再建立在地基線並發展文化記憶介入。</p></div></li>
             </ol>
           </div>}
           <div className="reference-tools">
@@ -857,7 +870,7 @@ export default function Home() {
                 <div className="reference-meta"><span>國外期刊</span><small>{r.topic}</small></div>
                 <p>{r.citation} <a className="inline-doi" href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer">https://doi.org/{r.doi}</a></p>
                 <div className="foreign-summary"><b>研究重點</b><span>{r.summary}</span></div>
-                <div className="reference-links"><a href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer"><span>DOI</span>期刊來源<b>↗</b></a>{r.files.map(file => <a key={file.url} href={file.url} target="_blank" rel="noreferrer" title={file.note}><span>PDF</span>{file.label}<b>↗</b>{file.note && <small>{file.note}</small>}</a>)}</div>
+                <div className="reference-links"><a href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer"><span>DOI</span>正式來源<b>↗</b></a>{r.files.map(file => <a key={file.url} href={file.url} target="_blank" rel="noreferrer" title={file.note}><span>{file.kind ?? "PDF"}</span>{file.label}<b>↗</b>{file.note && <small>{file.note}</small>}</a>)}</div>
               </div>
             </article>)}
           </div> : <div className="reference-list thesis-list">
