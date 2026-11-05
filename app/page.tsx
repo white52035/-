@@ -29,6 +29,7 @@ type ReferenceItem = {
 type ThesisReference = { title: string; url: string; topic: string };
 type ForeignReference = {
   year: number;
+  sourceType: "國外期刊" | "國外專書";
   citation: React.ReactNode;
   searchText: string;
   topic: string;
@@ -389,6 +390,7 @@ const references: ReferenceItem[] = [
 const foreignReferences: ForeignReference[] = [
   {
     year: 2022,
+    sourceType: "國外期刊",
     citation: <>Karpathiou, N., &amp; Kambanaros, M. (2022). Comparing individuals with PPA to individuals with AD: Cognitive and linguistic profiles. <i>Frontiers in Communication, 7</i>, Article 893471.</>,
     searchText: "Karpathiou Kambanaros PPA AD cognitive linguistic profiles primary progressive aphasia Alzheimer",
     topic: "PPA、AD與語言—認知輪廓",
@@ -398,6 +400,19 @@ const foreignReferences: ForeignReference[] = [
   },
   {
     year: 2008,
+    sourceType: "國外專書",
+    citation: <>Ball, M. J., Perkins, M. R., Müller, N., &amp; Howard, S. (Eds.). (2008). <i>The handbook of clinical linguistics</i>. Blackwell Publishing.</>,
+    searchText: "Ball Perkins Müller Howard handbook clinical linguistics pragmatics discourse sociolinguistics syntax semantics phonetics phonology multilingual cross-linguistic communication disorders",
+    topic: "臨床語言學完整理論與分析框架",
+    summary: "由四位編者統整38章，分為語用、話語與社會語言學；句法與語意；語音與音韻三大部分，並在各領域納入跨語言、多語及溝通障礙觀點，是連接語言學理論、臨床分析與評估方法的核心手冊。",
+    doi: "10.1002/9781444301007",
+    files: [
+      { label: "Wiley Online Books", url: "https://onlinelibrary.wiley.com/doi/book/10.1002/9781444301007", kind: "BOOK" },
+    ],
+  },
+  {
+    year: 2008,
+    sourceType: "國外期刊",
     citation: <>Bier, N., Van der Linden, M., Gagnon, L., Desrosiers, J., Adam, S., Louveaux, S., &amp; Saint-Mleux, J. (2008). Face-name association learning in early Alzheimer’s disease: A comparison of learning methods and their underlying mechanisms. <i>Neuropsychological Rehabilitation, 18</i>(3), 343–371.</>,
     searchText: "Bier Van der Linden face name association early Alzheimer learning spaced retrieval vanishing cues errorless implicit memory",
     topic: "早期AD的臉孔—姓名聯想學習",
@@ -410,6 +425,7 @@ const foreignReferences: ForeignReference[] = [
   },
   {
     year: 1999,
+    sourceType: "國外專書",
     citation: <>Poole, S. C. (1999). <i>An introduction to linguistics</i>. Palgrave. </>,
     searchText: "Poole Stuart introduction linguistics language lexis semantics phonetics phonology morphology syntax regional social variation historical writing systems",
     topic: "語言學基礎與社會變異",
@@ -832,7 +848,7 @@ export default function Home() {
             <div>
               <div className="section-kicker">REFERENCE LIBRARY · PERMANENT LINKS</div>
               <h2>文獻參考</h2>
-              <p>整合國外期刊、《臨床社會語言學》章節原典與臺灣博碩士論文，保留研究焦點及可查證的 DOI／永久連結。</p>
+              <p>整合國外期刊與專書、《臨床社會語言學》章節原典及臺灣博碩士論文，保留研究焦點及可查證的 DOI／永久連結。</p>
             </div>
             <div className="reference-count"><strong>{refCollection === "theses" ? filteredTheses.length : refCollection === "foreign" ? filteredForeign.length : filteredReferences.length}</strong><span>／{refCollection === "theses" ? "34篇論文" : refCollection === "foreign" ? `${foreignReferences.length}篇國外文獻` : "21章文獻"}</span></div>
           </div>
@@ -842,12 +858,13 @@ export default function Home() {
             <button className={refCollection === "chapters" ? "active" : ""} onClick={() => setRefCollection("chapters")}>書籍章節原典 <b>21</b></button>
           </div>
           {refCollection === "foreign" && <div className="foreign-guide" aria-label="國外文獻導讀">
-            <div><small>READING GUIDE</small><h3>三筆文獻，三層研究用途</h3><p>先從基礎語言學建立概念地圖，再比較疾病鑑別與介入學習研究；每筆均提供 DOI、出版者頁面或原始 PDF。</p></div>
+            <div><small>READING GUIDE</small><h3>四筆文獻，四層研究用途</h3><p>從語言學基礎進入臨床語言學整合框架，再比較疾病鑑別與介入學習研究；每筆均提供 DOI、出版者頁面或原始 PDF。</p></div>
             <ol>
               <li><span>01</span><div><b>基礎概念線</b><p>1999｜建立語言結構、社會變異、語言變遷與書寫系統的入門框架。</p></div></li>
-              <li><span>02</span><div><b>疾病鑑別線</b><p>2022｜比較 PPA、AD 與神經典型成人的認知、語言及敘事輪廓。</p></div></li>
-              <li><span>03</span><div><b>介入學習線</b><p>2008｜比較早期 AD 患者五種臉孔—姓名聯想學習方法。</p></div></li>
-              <li><span>04</span><div><b>阿美族研究連結</b><p>先界定語言層次與社會變異，再建立在地基線並發展文化記憶介入。</p></div></li>
+              <li><span>02</span><div><b>臨床整合線</b><p>2008｜串連社會語言、句法語意、語音音韻與跨語言臨床分析。</p></div></li>
+              <li><span>03</span><div><b>疾病鑑別線</b><p>2022｜比較 PPA、AD 與神經典型成人的認知、語言及敘事輪廓。</p></div></li>
+              <li><span>04</span><div><b>介入學習線</b><p>2008｜比較早期 AD 患者五種臉孔—姓名聯想學習方法。</p></div></li>
+              <li><span>05</span><div><b>阿美族研究連結</b><p>先界定語言層次與社會變異，再發展跨語言評估、在地基線與文化記憶介入。</p></div></li>
             </ol>
           </div>}
           <div className="reference-tools">
@@ -867,7 +884,7 @@ export default function Home() {
             {filteredForeign.map((r, index)=><article key={r.doi}>
               <div className="reference-number"><span>YEAR</span><b>{r.year}</b></div>
               <div className="reference-entry">
-                <div className="reference-meta"><span>國外期刊</span><small>{r.topic}</small></div>
+                <div className="reference-meta"><span>{r.sourceType}</span><small>{r.topic}</small></div>
                 <p>{r.citation} <a className="inline-doi" href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer">https://doi.org/{r.doi}</a></p>
                 <div className="foreign-summary"><b>研究重點</b><span>{r.summary}</span></div>
                 <div className="reference-links"><a href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer"><span>DOI</span>正式來源<b>↗</b></a>{r.files.map(file => <a key={file.url} href={file.url} target="_blank" rel="noreferrer" title={file.note}><span>{file.kind ?? "PDF"}</span>{file.label}<b>↗</b>{file.note && <small>{file.note}</small>}</a>)}</div>
@@ -884,7 +901,7 @@ export default function Home() {
             </article>)}
           </div>}
           {refCollection === "foreign" && <PPAArticleAnalysis />}
-          <div className="reference-provenance"><b>來源與排序</b><p>{refCollection === "theses" ? "本清單收錄指定的34筆「臺灣博碩士論文知識加值系統」文獻，依研究者提供之新至舊順序呈現；每筆均連至國家圖書館Handle永久識別網址。國圖目錄可能要求驗證碼，本站不臆補未能可靠核對的年份或作者。" : refCollection === "foreign" ? "國外文獻依出版年份新至舊排列；作者、期刊、卷期、頁碼與 DOI 以原始論文及 Crossref 書目資料核對。中文整理檔為機器翻譯輔助材料，引用與判讀均應以英文原文為準。" : "章名與作者依指定Google文件整理；DOI已逐章以Crossref書目資料核對。此區列出各章原典，不將閱讀心得中的未完整書目人名或案例自行擴充為正式引用。"}</p>{refCollection === "chapters" && <a href="https://docs.google.com/document/d/1J7xyJ0r_9L6q6xOnYD_RA8o9kN33zXWJYVBv7zsjHWQ/edit" target="_blank" rel="noreferrer">開啟原始整理文件 ↗</a>}</div>
+          <div className="reference-provenance"><b>來源與排序</b><p>{refCollection === "theses" ? "本清單收錄指定的34筆「臺灣博碩士論文知識加值系統」文獻，依研究者提供之新至舊順序呈現；每筆均連至國家圖書館Handle永久識別網址。國圖目錄可能要求驗證碼，本站不臆補未能可靠核對的年份或作者。" : refCollection === "foreign" ? "國外文獻依出版年份新至舊排列，同年依第一作者或編者姓氏排列；作者／編者、期刊／出版者、卷期、頁碼與 DOI 以原始資料及官方出版頁核對。中文整理檔為機器翻譯輔助材料，引用與判讀均應以英文原文為準。" : "章名與作者依指定Google文件整理；DOI已逐章以Crossref書目資料核對。此區列出各章原典，不將閱讀心得中的未完整書目人名或案例自行擴充為正式引用。"}</p>{refCollection === "chapters" && <a href="https://docs.google.com/document/d/1J7xyJ0r_9L6q6xOnYD_RA8o9kN33zXWJYVBv7zsjHWQ/edit" target="_blank" rel="noreferrer">開啟原始整理文件 ↗</a>}</div>
         </section>
       )}
       {tab === "plan" && (
