@@ -5,6 +5,67 @@
   --orange: #d7653e;
   --line: #d8d3c7;
 }
+
+/* Statistics learning lab */
+.statistics-view { padding:80px 4.5vw 110px; }
+.statistics-hero { display:grid; grid-template-columns:1.25fr .75fr; gap:7vw; align-items:end; padding-bottom:54px; border-bottom:1px solid var(--line); }
+.statistics-hero h2 { margin:14px 0 20px; font:clamp(42px,5.5vw,78px)/.98 Georgia,serif; letter-spacing:-.04em; }
+.statistics-hero h2 em { color:var(--orange); font-weight:400; }
+.statistics-hero > div > p { max-width:720px; font-size:18px; line-height:1.8; color:#52645e; }
+.statistics-hero aside { background:var(--ink); color:white; padding:30px; display:grid; gap:10px; }
+.statistics-hero aside span,.statistics-hero aside small { color:#e9a98f; font-size:11px; letter-spacing:.16em; }
+.statistics-hero aside strong { font:34px Georgia,serif; }
+.statistics-hero aside p { margin:4px 0 8px; line-height:1.7; color:#d9e0dc; }
+.statistics-hero aside a { color:white; text-decoration:none; border-top:1px solid #ffffff30; padding-top:15px; font-weight:700; }
+.statistics-scope { margin:26px 0 70px; display:grid; grid-template-columns:150px 1fr; gap:25px; padding:24px 28px; border-left:4px solid var(--orange); background:#fff8f0; }
+.statistics-scope b { font-size:15px; }
+.statistics-scope p { margin:0; line-height:1.75; }
+.statistics-heading { display:flex; justify-content:space-between; gap:40px; align-items:end; margin:0 0 24px; }
+.statistics-heading h3 { margin:8px 0 0; font:36px Georgia,serif; }
+.statistics-heading > p { max-width:490px; margin:0; color:#64736e; line-height:1.7; }
+.statistics-concepts { border-top:1px solid var(--line); }
+.statistics-concepts details { border-bottom:1px solid var(--line); background:var(--cream); }
+.statistics-concepts summary { min-height:108px; display:grid; grid-template-columns:70px 1fr 32px; align-items:center; gap:20px; padding:0 28px; cursor:pointer; list-style:none; }
+.statistics-concepts summary::-webkit-details-marker { display:none; }
+.statistics-concepts summary > span { font:28px Georgia,serif; color:var(--orange); }
+.statistics-concepts summary small { letter-spacing:.16em; font-size:10px; color:#7d8985; }
+.statistics-concepts summary h4 { display:inline-block; margin:5px 22px 0 0; font-size:23px; }
+.statistics-concepts summary p { display:inline-block; margin:0; color:#687772; }
+.statistics-concepts summary > b { font-size:24px; font-weight:400; transition:.2s; }
+.statistics-concepts details[open] summary > b { transform:rotate(45deg); }
+.statistics-detail { display:grid; grid-template-columns:1fr 1fr .9fr; border-top:1px solid var(--line); }
+.statistics-detail > * { padding:28px; border-right:1px solid var(--line); }
+.statistics-detail > *:last-child { border-right:0; background:#edf1ed; }
+.statistics-detail small { color:var(--orange); font-weight:700; letter-spacing:.12em; }
+.statistics-detail p { line-height:1.75; margin:10px 0 0; }
+.statistics-example { margin:76px 0; background:#e8e3d7; padding:40px; }
+.statistics-example header { margin-bottom:24px; }
+.statistics-example h3 { margin:8px 0 0; font:34px Georgia,serif; }
+.statistics-example-grid { display:grid; grid-template-columns:1.3fr .8fr .65fr 1.15fr; border:1px solid #c8c1b3; background:var(--cream); }
+.statistics-example-grid > * { padding:25px; border-right:1px solid #c8c1b3; }
+.statistics-example-grid > *:last-child { border:0; background:var(--ink); color:white; }
+.statistics-example-grid small,.statistics-example-grid span { display:block; color:var(--orange); font-size:11px; font-weight:700; letter-spacing:.12em; margin-bottom:12px; }
+.statistics-example-grid strong { display:block; font:22px Georgia,serif; }
+.statistics-example-grid b { display:block; margin-bottom:10px; }
+.statistics-example-grid p { line-height:1.65; margin:12px 0 0; }
+.statistics-workflow { margin-bottom:76px; }
+.statistics-workflow ol { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(5,1fr); border:1px solid var(--line); }
+.statistics-workflow li { padding:25px 20px; border-right:1px solid var(--line); }
+.statistics-workflow li:last-child { border:0; }
+.statistics-workflow li > span { color:var(--orange); font:20px Georgia,serif; }
+.statistics-workflow li b { display:block; font-size:17px; margin:18px 0 8px; }
+.statistics-workflow li p { margin:0; line-height:1.65; color:#5c6d67; }
+.statistics-matrix { margin-bottom:42px; }
+.statistics-matrix h3 { margin:8px 0 22px; font:34px Georgia,serif; }
+.statistics-table-wrap { overflow-x:auto; }
+.statistics-matrix table { width:100%; min-width:800px; border-collapse:collapse; background:var(--cream); }
+.statistics-matrix th,.statistics-matrix td { text-align:left; padding:18px 20px; border:1px solid var(--line); line-height:1.55; }
+.statistics-matrix th { background:var(--ink); color:white; font-size:13px; letter-spacing:.06em; }
+.statistics-matrix td:last-child { color:#a04b31; }
+.statistics-gap { display:grid; grid-template-columns:150px 1fr; gap:30px; align-items:start; padding:35px; background:var(--orange); color:white; }
+.statistics-gap small { letter-spacing:.15em; font-weight:700; }
+.statistics-gap p { margin:0; font:24px/1.55 Georgia,serif; }
+
 * {
   box-sizing: border-box;
 }
@@ -1342,4 +1403,18 @@ footer p {
   .insight.lead p {
     font-size: 21px;
   }
+  .statistics-view { padding:60px 22px 100px; }
+  .statistics-hero { grid-template-columns:1fr; gap:30px; }
+  .statistics-scope,.statistics-gap { grid-template-columns:1fr; gap:10px; }
+  .statistics-heading { align-items:flex-start; flex-direction:column; gap:12px; }
+  .statistics-concepts summary { grid-template-columns:44px 1fr 24px; gap:10px; padding:0 16px; }
+  .statistics-concepts summary h4,.statistics-concepts summary p { display:block; margin:5px 0 0; }
+  .statistics-detail { grid-template-columns:1fr; }
+  .statistics-detail > * { border-right:0; border-bottom:1px solid var(--line); }
+  .statistics-detail > *:last-child { border-bottom:0; }
+  .statistics-example { padding:26px 20px; }
+  .statistics-example-grid { grid-template-columns:1fr; }
+  .statistics-example-grid > * { border-right:0; border-bottom:1px solid #c8c1b3; }
+  .statistics-workflow ol { grid-template-columns:1fr; }
+  .statistics-workflow li { border-right:0; border-bottom:1px solid var(--line); }
 }
